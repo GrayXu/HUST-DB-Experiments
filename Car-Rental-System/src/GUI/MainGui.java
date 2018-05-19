@@ -7,33 +7,39 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Vector;
 
 public class MainGui {
 
     JPanel jPanel;
     JFrame frame;
+    private JTable jTable;//当前界面的Table
+    DefaultTableModel tableModel;
 
-    String userName;
-    JTextField textDialogName;
-    JPasswordField textDialogPsw;
-    JDialog dialogLogin;
+    private String userName;
+    private JTextField textDialogName;
+    private JPasswordField textDialogPsw;
+    private JDialog dialogLogin;
 
-    public static int authority;
-    public DataBase dataBase;
-    static int SCREEN_WIDTH;
-    static int SCREEN_HEIGHT;
-    static String PANEL_MODE = new String("");
+    private static int authority;
+    private DataBase dataBase;
+    private static int SCREEN_WIDTH;
+    private static int SCREEN_HEIGHT;
+
+    private String PANEL_MODE = "";
+    private int delete_row_id = -1;
 
     public static void main(String[] args) {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         SCREEN_WIDTH = dim.width;
         SCREEN_HEIGHT = dim.height;
 
-
         JFrame getFrame = new MainGui().initDialog();
-
 
     }
 
@@ -44,7 +50,6 @@ public class MainGui {
         if (dataBase.initConnect()) {
 
             dialogLogin = new JDialog();
-//            dialogLogin.setIconImage(image);
             dialogLogin.setTitle("汽车租借信息系统");
 
             dialogLogin.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -67,7 +72,7 @@ public class MainGui {
             dialogLogin.add(namePanel, BorderLayout.NORTH);
             dialogLogin.add(pswPanel, BorderLayout.CENTER);
             dialogLogin.add(butLogin, BorderLayout.SOUTH);
-            butLogin.addActionListener(butListener);
+            butLogin.addActionListener(otherListener);
             dialogLogin.setResizable(false);
 
             setCenter(dialogLogin);
@@ -81,7 +86,7 @@ public class MainGui {
 
     }
 
-    ActionListener butListener = (ActionEvent e) -> {
+    ActionListener otherListener = (ActionEvent e) -> {
         String strClick = e.getActionCommand();
         System.out.println(strClick);
         if (strClick.equals("登录")) {
@@ -120,6 +125,7 @@ public class MainGui {
         setCenter(frame);
         frame.setTitle("汽车租借信息管理系统——欢迎" + userName);
         initMenu();
+        createPopupMenu();
         frame.setSize(600, 500);
         frame.setVisible(true);
 
@@ -145,7 +151,7 @@ public class MainGui {
         for (JMenuItem i :
                 itemsOther) {
             menuOther.add(i);
-            i.addActionListener(butListener);
+            i.addActionListener(otherListener);
         }
 
         JMenu menuOp = new JMenu("操作");
@@ -155,7 +161,7 @@ public class MainGui {
         for (JMenuItem i :
                 itemsOp) {
             menuOp.add(i);
-            i.addActionListener(butListener);
+            i.addActionListener(otherListener);
         }
 
         JMenu menuReport = new JMenu("报表");
@@ -167,7 +173,7 @@ public class MainGui {
         for (JMenuItem i :
                 itemReport) {
             menuReport.add(i);
-            i.addActionListener(butListener);
+            i.addActionListener(otherListener);
         }
 
         JMenu menuManage = new JMenu("管理");
@@ -175,24 +181,21 @@ public class MainGui {
         itemManage.add(new JMenuItem("客户"));
         itemManage.add(new JMenuItem("车辆"));
         itemManage.add(new JMenuItem("员工"));
-        itemManage.add(new JMenuItem("账户"));
-        itemManage.add(new JMenuItem("财务"));
-
-
+        if (authority == 1) {
+            itemManage.add(new JMenuItem("管理员"));
+        }
+        itemManage.add(new JMenuItem("事件"));
 
         for (JMenuItem i :
                 itemManage) {
             menuManage.add(i);
             i.addActionListener(changeTableListener);
         }
-
-
         mb.add(menuOp);
         mb.add(menuManage);
         mb.add(menuReport);
         mb.add(menuOther);
         frame.setJMenuBar(mb);
-
 
     }
 
@@ -211,65 +214,166 @@ public class MainGui {
         JOptionPane.showMessageDialog(frame, in);
     }
 
-    private void setTablePanel(String[][] arrays, String[] columnNames){
-        JTable jTable = new JTable(arrays, new String[]{"品牌","车牌号","租金","车况","押金"});
+    /**
+     * 加载全新的布局（包括表格）
+     * @param vectors
+     * @param columns
+     */
+    private void setTablePanel(Vector<Vector<String>> vectors, Vector<String> columns) {
+        tableModel = new DefaultTableModel(vectors, columns){
+            @Override
+            public void setValueAt(Object aValue, int row, int column) {
+                super.setValueAt(aValue, row, column);//在这里做修改值的限定
+            }
+        };
+        //利用列名来控制无法修改id
+        if (!columns.get(0).equals("id")) {
+            jTable = new JTable() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return true;
+                }
+            };
+        } else {
+            jTable = new JTable() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    if (column == 0) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            };
+        }
+        jTable.getTableHeader().setReorderingAllowed(false);
+        jTable.setModel(tableModel);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mouseRightButtonClick(e, jTable);
+            }
+
+        });
+
         JScrollPane scrollPane = new JScrollPane(jTable);
+        scrollPane.setPreferredSize(new Dimension(500, 350));
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jPanel.add(scrollPane, BorderLayout.NORTH);
         jPanel.updateUI();
+    }
+
+    /**
+     * 弹出右键窗口逻辑
+     * @param evt
+     * @param jTable
+     */
+    private void mouseRightButtonClick(MouseEvent evt, JTable jTable) {
+        //判断是否为鼠标的BUTTON3按钮，BUTTON3为鼠标右键
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+            //通过点击位置找到点击为表格中的行
+            int focusedRowIndex = jTable.rowAtPoint(evt.getPoint());
+            if (focusedRowIndex == -1) {
+                return;
+            }
+            delete_row_id = focusedRowIndex;
+            //将表格所选项设为当前右键点击的行
+            jTable.setRowSelectionInterval(focusedRowIndex, focusedRowIndex);
+            //弹出菜单
+            jPopupMenu.show(jTable, evt.getX(), evt.getY());
+        }
     }
 
     ActionListener changeTableListener = e -> {
         String strClick = e.getActionCommand();
         System.out.println(strClick);
-        if (strClick.equals("客户")) {
-            if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
-                if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
-                    frame.getContentPane().removeAll();//移除原有的东西
-                    try {
-                        setTablePanel(DataBase.getInstance().getCustomerLists(),
-                                new String[]{"姓名","年龄","信誉度","是否会员"});
-                    } catch (SQLException e1) {
-                        noticeMsg("数据库发生错误");
-                    }
-                }
-            }
-        } else if (strClick.equals("车辆")) {
-            if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
-                frame.getContentPane().removeAll();//移除原有的东西
+        if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
+            frame.getContentPane().removeAll();//移除原有的东西
+            if (strClick.equals("客户")) {
                 try {
-                    setTablePanel(DataBase.getInstance().getCarLists(),
-                            new String[]{"品牌","车牌号","租金","车况","押金"});
+                    Vector<String> columns = new Vector<>(Arrays.asList("id", "姓名", "年龄", "信誉度", "是否会员"));
+                    Vector<Vector<String>> vectors = DataBase.getInstance().getCustomerLists();
+                    setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
                     noticeMsg("数据库发生错误");
                 }
-            }
-        } else if (strClick.equals("员工")) {
-            if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
-                if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
-                    frame.getContentPane().removeAll();//移除原有的东西
-                    try {
-                        setTablePanel(DataBase.getInstance().getStuffLists(),
-                                new String[]{"姓名","年龄","工资"});
-                    } catch (SQLException e1) {
-                        noticeMsg("数据库发生错误");
-                    }
+            } else if (strClick.equals("车辆")) {
+                try {
+                    Vector<String> columns = new Vector<>(Arrays.asList("id", "品牌", "车牌号", "租金", "车况", "押金"));
+                    Vector<Vector<String>> vectors = DataBase.getInstance().getCarLists();
+                    setTablePanel(vectors, columns);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                    noticeMsg("数据库发生错误");
+                }
+            } else if (strClick.equals("员工")) {
+                try {
+                    Vector<String> columns = new Vector<>(Arrays.asList("id", "姓名", "年龄"));
+                    Vector<Vector<String>> vectors = DataBase.getInstance().getStuffLists();
+                    setTablePanel(vectors, columns);
+                } catch (SQLException e1) {
+                    noticeMsg("数据库发生错误");
+                }
+            } else if (strClick.equals("管理员")) {
+                try {
+                    Vector<String> columns = new Vector<>(Arrays.asList("姓名", "密码", "权限等级"));
+                    Vector<Vector<String>> vectors = DataBase.getInstance().getUserLists();
+                    setTablePanel(vectors, columns);
+                } catch (SQLException e1) {
+                    noticeMsg("查询管理员数据时，数据库发生错误");
+                }
+            } else if (strClick.equals("事件")) {
+                try {
+                    Vector<String> columns = new Vector<>(Arrays.asList("id", "流水", "车牌","事件","备注","事件","经手员工"));
+                    Vector<Vector<String>> vectors = DataBase.getInstance().getInfoLists();
+                    setTablePanel(vectors, columns);
+                } catch (SQLException e1) {
+                    noticeMsg("查询事件数据时，数据库发生错误");
                 }
             }
-        } else if (strClick.equals("账户")) {
-            if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
-                if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
-                    frame.getContentPane().removeAll();//移除原有的东西
-                    try {
-                        setTablePanel(DataBase.getInstance().getUserLists(),
-                                new String[]{"姓名","密码","权限等级"});
-                    } catch (SQLException e1) {
-                        noticeMsg("数据库发生错误");
-                    }
-                }
-            }
-        } else if (strClick.equals("财务")) {
-
+            PANEL_MODE = strClick;
         }
-        PANEL_MODE = strClick;
     };
+
+    JPopupMenu jPopupMenu;
+
+    private void createPopupMenu() {
+        jPopupMenu = new JPopupMenu();
+
+        JMenuItem delMenuItem = new JMenuItem();
+        delMenuItem.setText("删除本行");
+        delMenuItem.addActionListener(evt -> {
+            int id = Integer.valueOf ((String) jTable.getValueAt(delete_row_id,0));
+            try {
+                DataBase.getInstance().deleteRow(PANEL_MODE, id);
+                tableModel.removeRow(delete_row_id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                noticeMsg("删除失败");
+            }
+        });
+
+        JMenuItem addMenuItem = new JMenuItem();
+        addMenuItem.setText("添加新行");
+        delMenuItem.addActionListener(evt -> {
+            HashMap<String, String> map = getNewRow();
+            try {
+                DataBase.getInstance().addRow(PANEL_MODE, map);
+//                tableModel.addRow();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+
+        jPopupMenu.add(delMenuItem);
+    }
+
+    private HashMap<String, String> getNewRow(){
+        HashMap<String, String> map = new HashMap<>();
+
+        //create a dialog
+
+        return map;
+    }
+
 }

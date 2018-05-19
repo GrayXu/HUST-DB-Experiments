@@ -1,8 +1,7 @@
 package IO;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class DataBase {
 
@@ -10,32 +9,29 @@ public class DataBase {
     public static final String USER = "root";
     public static final String PASSWORD = "XIANG1569348";
 
-//    public static String[] carCols = new String[]{"brand","license","cost","status","pledge"};
     private Connection connection;
+
     /**
-    单例
+     * 单例
      */
     private static class InnerHelper {
         private final static DataBase dataBase = new DataBase();
     }
 
-    private DataBase(){}
+    private DataBase() {
+    }
 
-    public static DataBase getInstance(){
+    public static DataBase getInstance() {
         return InnerHelper.dataBase;
     }
 
     /**
-     *
      * @return status of connection
      */
-    public boolean initConnect(){
+    public boolean initConnect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-
-
-
             return true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -49,6 +45,7 @@ public class DataBase {
 
     /**
      * return users' authority
+     *
      * @param name
      * @param psw
      * @return authority, -1->no found, 1->root user, 2->administrator, 3->normal user
@@ -57,83 +54,200 @@ public class DataBase {
     public int checkUser(String name, String psw) throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
-        while(resultSet.next()){
-            if (resultSet.getString("name").equals(name)){
-                if (resultSet.getString("password").equals(psw)){
+        while (resultSet.next()) {
+            if (resultSet.getString("name").equals(name)) {
+                if (resultSet.getString("password").equals(psw)) {
                     return resultSet.getInt("author");
                 }
             }
         }
+        statement.close();
         return -1;
     }
 
-    public String[][] getCarLists() throws SQLException {
+    /**
+     * 以下五个getLists都为从数据库中获得对应的数据
+     *
+     * @return
+     * @throws SQLException
+     */
+    public Vector<Vector<String>> getCarLists() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM car");
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 2; i <= 6; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= 6; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
         }
-        return lists2arrays(lists);
+        statement.close();
+        return lists2vectors(lists);
     }
 
-    public String[][] getCustomerLists() throws SQLException {
+    public Vector<Vector<String>> getCustomerLists() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM customer");
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 2; i <= 5; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= 5; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
         }
-        return lists2arrays(lists);
+        statement.close();
+        return lists2vectors(lists);
     }
 
-    public String[][] getStuffLists() throws SQLException {
+    public Vector<Vector<String>> getStuffLists() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM stuff");
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()){
-            ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 2; i <= 4; i++) {//从1开始，很奇怪的设定。。。
-                tempList.add(resultSet.getString(i));
-            }
-            lists.add(tempList);
-        }
-        return lists2arrays(lists);
-    }
-
-    public String[][] getUserLists() throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM user");
-        ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
             for (int i = 1; i <= 3; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
         }
-        return lists2arrays(lists);
+        statement.close();
+        return lists2vectors(lists);
+    }
+
+    public Vector<Vector<String>> getUserLists() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+        ArrayList<ArrayList<String>> lists = new ArrayList<>();
+        while (resultSet.next()) {
+            ArrayList<String> tempList = new ArrayList<>();
+            for (int i = 1; i <= 3; i++) {//从1开始，很奇怪的设定。。。
+                tempList.add(resultSet.getString(i));
+            }
+            lists.add(tempList);
+        }
+        statement.close();
+        return lists2vectors(lists);
+    }
+
+    public Vector<Vector<String>> getInfoLists() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT info.infoid ,info.moychange, car.license, info.event, info.detailevent, info.time, stuff.name\n" +
+                "FROM info,car,stuff\n" +
+                "WHERE info.carid = car.id AND info.stuffid = stuff.id\n");
+        ArrayList<ArrayList<String>> lists = new ArrayList<>();
+        while (resultSet.next()) {
+            ArrayList<String> tempList = new ArrayList<>();
+            for (int i = 1; i <= 7; i++) {//从1开始，很奇怪的设定。。。
+                if (i == 4) {
+                    switch (resultSet.getInt(i)) {
+                        case 1:
+                            tempList.add("损坏");
+                            break;
+                        case 2:
+                            tempList.add("罚款");
+                            break;
+                        case 3:
+                            tempList.add("借车");
+                            break;
+                        case 4:
+                            tempList.add("还车");
+                            break;
+                    }
+                } else {
+                    tempList.add(resultSet.getString(i));
+                }
+            }
+            lists.add(tempList);
+        }
+        statement.close();
+        return lists2vectors(lists);
     }
 
     /**
-     * 二维ArrayList转换为二维数组
+     * 在数据库中级联删除一行
+     *
+     * @param tableMode
+     * @param id
+     * @throws SQLException
+     */
+    public void deleteRow(String tableMode, int id) throws SQLException {
+        Statement statement = connection.createStatement();
+        String tableName = tableMode2Name(tableMode);
+        if (tableName != null) {
+            String sql = "DELETE FROM " + tableName + " WHERE id = " + id;
+            System.out.println(sql);
+            statement.execute(sql);
+        }
+        statement.close();
+    }
+
+    /**
+     * 添加行
+     * @param tableMode
+     * @param data
+     * @throws SQLException
+     */
+    public void addRow(String tableMode, HashMap<String, String> data) throws SQLException {
+        Statement statement = connection.createStatement();
+        String tableName = tableMode2Name(tableMode);
+        if (tableName != null) {
+            StringBuilder colunms = new StringBuilder("");
+            StringBuilder values = new StringBuilder("");
+            Set<String> keySet = data.keySet();
+            Iterator<String> iterator = keySet.iterator();
+            boolean isFirst = true;
+            while (iterator.hasNext()){
+                String s = iterator.next();
+                if (isFirst){
+                    isFirst = false;
+                    colunms.append(s);
+                    values.append(data.get(s));
+                }else{
+                    colunms.append(","+s);
+                    values.append(","+data.get(s));
+                }
+            }
+            String sql = "INSERT INTO "+tableName+" ("+colunms.toString()+") VALUES ("+values.toString()+")";
+
+            System.out.println(sql);
+//            statement.execute(sql);
+        }
+    }
+
+    private String tableMode2Name(String tableMode) {
+        if (tableMode.equals("车辆")) {
+            return "car";
+        } else if (tableMode.equals("顾客")) {
+            return "customer";
+        }
+        if (tableMode.equals("信息")) {
+            return "info";
+        }
+        if (tableMode.equals("员工")) {
+            return "stuff";
+        }
+        if (tableMode.equals("管理员")) {
+            return "users";
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 二维ArrayList转换为二维Vector
+     *
      * @param lists
      * @return
      */
-    private String[][] lists2arrays(ArrayList<ArrayList<String>> lists){
-        String[][] stringss = new String[lists.size()][];
+    private Vector<Vector<String>> lists2vectors(ArrayList<ArrayList<String>> lists) {
+        Vector<Vector<String>> vectors = new Vector<>();
+
         for (int i = 0; i < lists.size(); i++) {
-            stringss[i] = lists.get(i).toArray(new String[lists.get(i).size()]);
+            vectors.add(new Vector<>(lists.get(i)));
         }
-        return stringss;
+        return vectors;
     }
 
 }
