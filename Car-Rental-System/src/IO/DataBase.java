@@ -1,5 +1,7 @@
 package IO;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.sql.*;
 import java.util.*;
 
@@ -77,7 +79,7 @@ public class DataBase {
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= 6; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= 5; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
@@ -92,7 +94,7 @@ public class DataBase {
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= 5; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= 4; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
@@ -135,7 +137,7 @@ public class DataBase {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT info.infoid ,info.moychange, car.license, info.event, info.detailevent, info.time, stuff.name\n" +
                 "FROM info,car,stuff\n" +
-                "WHERE info.carid = car.id AND info.stuffid = stuff.id\n");
+                "WHERE info.license = car.license AND info.stuffid = stuff.id\n");
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
@@ -184,7 +186,68 @@ public class DataBase {
     }
 
     /**
+     * 更新数据
+     * @param value
+     * @throws SQLException
+     */
+    public void updateData(String value) throws SQLException {
+        Statement statement = connection.createStatement();
+    }
+
+    @Nullable
+    private String name2name(String strIn) {
+        if (strIn.equals("姓名")) {
+            return "name";
+        } else if (strIn.equals("品牌")) {
+            return "brand";
+        } else if (strIn.equals("车牌号")) {
+            return "license";
+        } else if (strIn.equals("租金")) {
+            return "cost";
+        } else if (strIn.equals("车况")) {
+            return "status";
+        } else if (strIn.equals("年龄")) {
+            return "age";
+        } else if (strIn.equals("是否会员")) {
+            return "member";
+        } else if (strIn.equals("密码")) {
+            return "password";
+        } else if (strIn.equals("权限等级")) {
+            return "author";
+        } else if (strIn.equals("押金")) {
+            return "pledge";
+        }
+        return null;
+    }
+
+    private boolean isIntColumn(String strIn) {
+        if (strIn.equals("姓名")) {
+            return false;
+        } else if (strIn.equals("品牌")) {
+            return false;
+        } else if (strIn.equals("车牌号")) {
+            return false;
+        } else if (strIn.equals("租金")) {
+            return true;
+        } else if (strIn.equals("车况")) {
+            return true;
+        } else if (strIn.equals("年龄")) {
+            return true;
+        } else if (strIn.equals("是否会员")) {
+            return false;
+        } else if (strIn.equals("密码")) {
+            return true;
+        } else if (strIn.equals("权限等级")) {
+            return false;
+        } else if (strIn.equals("押金")) {
+            return false;
+        }
+        return false;
+    }
+
+    /**
      * 添加行
+     *
      * @param tableMode
      * @param data
      * @throws SQLException
@@ -193,26 +256,34 @@ public class DataBase {
         Statement statement = connection.createStatement();
         String tableName = tableMode2Name(tableMode);
         if (tableName != null) {
-            StringBuilder colunms = new StringBuilder("");
+            StringBuilder columns = new StringBuilder("");
             StringBuilder values = new StringBuilder("");
             Set<String> keySet = data.keySet();
             Iterator<String> iterator = keySet.iterator();
             boolean isFirst = true;
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 String s = iterator.next();
-                if (isFirst){
+                if (isFirst) {
                     isFirst = false;
-                    colunms.append(s);
-                    values.append(data.get(s));
-                }else{
-                    colunms.append(","+s);
-                    values.append(","+data.get(s));
+                    columns.append(name2name(s));
+                    if (isIntColumn(s)) {
+                        values.append(data.get(s));
+                    }else{
+                        values.append("'"+data.get(s)+"'");
+                    }
+                } else {
+                    columns.append("," + name2name(s));
+                    if (isIntColumn(s)) {
+                        values.append(","+data.get(s));
+                    }else{
+                        values.append(",'"+data.get(s)+"'");
+                    }
                 }
             }
-            String sql = "INSERT INTO "+tableName+" ("+colunms.toString()+") VALUES ("+values.toString()+")";
-
+            String sql = "INSERT INTO " + tableName + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
             System.out.println(sql);
-//            statement.execute(sql);
+            statement.execute(sql);
+            statement.close();
         }
     }
 

@@ -31,8 +31,14 @@ public class MainGui {
     private static int SCREEN_WIDTH;
     private static int SCREEN_HEIGHT;
 
-    private String PANEL_MODE = "";
+    private String PANEL_MODE = "";//users, stuff, car ....
     private int delete_row_id = -1;
+
+    private String[] customerColumns = new String[]{"id", "姓名", "年龄", "是否会员"};
+    private String[] carColumns = new String[]{"品牌", "车牌号", "租金", "车况", "押金"};
+    private String[] stuffColumns = new String[]{"id", "姓名", "年龄"};
+    private String[] usersColumns = new String[]{"姓名", "密码", "权限等级"};
+    private String[] infoColumns = new String[]{"id", "流水", "车牌", "事件", "备注", "时间", "经手员工"};
 
     public static void main(String[] args) {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -86,6 +92,9 @@ public class MainGui {
 
     }
 
+    /**
+     * 菜单栏中“其他”的监听器
+     */
     ActionListener otherListener = (ActionEvent e) -> {
         String strClick = e.getActionCommand();
         System.out.println(strClick);
@@ -118,6 +127,9 @@ public class MainGui {
         }
     };
 
+    /**
+     * 初始化主框架
+     */
     public void initMainFrame() {
         frame.setContentPane(jPanel);
         frame.pack();
@@ -216,13 +228,15 @@ public class MainGui {
 
     /**
      * 加载全新的布局（包括表格）
+     *
      * @param vectors
      * @param columns
      */
     private void setTablePanel(Vector<Vector<String>> vectors, Vector<String> columns) {
-        tableModel = new DefaultTableModel(vectors, columns){
+        tableModel = new DefaultTableModel(vectors, columns) {
             @Override
             public void setValueAt(Object aValue, int row, int column) {
+
                 super.setValueAt(aValue, row, column);//在这里做修改值的限定
             }
         };
@@ -265,6 +279,7 @@ public class MainGui {
 
     /**
      * 弹出右键窗口逻辑
+     *
      * @param evt
      * @param jTable
      */
@@ -284,6 +299,10 @@ public class MainGui {
         }
     }
 
+
+    /**
+     * 修改表格界面的监听器
+     */
     ActionListener changeTableListener = e -> {
         String strClick = e.getActionCommand();
         System.out.println(strClick);
@@ -291,7 +310,7 @@ public class MainGui {
             frame.getContentPane().removeAll();//移除原有的东西
             if (strClick.equals("客户")) {
                 try {
-                    Vector<String> columns = new Vector<>(Arrays.asList("id", "姓名", "年龄", "信誉度", "是否会员"));
+                    Vector<String> columns = new Vector<>(Arrays.asList(customerColumns));
                     Vector<Vector<String>> vectors = DataBase.getInstance().getCustomerLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
@@ -299,7 +318,7 @@ public class MainGui {
                 }
             } else if (strClick.equals("车辆")) {
                 try {
-                    Vector<String> columns = new Vector<>(Arrays.asList("id", "品牌", "车牌号", "租金", "车况", "押金"));
+                    Vector<String> columns = new Vector<>(Arrays.asList(carColumns));
                     Vector<Vector<String>> vectors = DataBase.getInstance().getCarLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
@@ -308,7 +327,7 @@ public class MainGui {
                 }
             } else if (strClick.equals("员工")) {
                 try {
-                    Vector<String> columns = new Vector<>(Arrays.asList("id", "姓名", "年龄"));
+                    Vector<String> columns = new Vector<>(Arrays.asList(stuffColumns));
                     Vector<Vector<String>> vectors = DataBase.getInstance().getStuffLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
@@ -316,7 +335,7 @@ public class MainGui {
                 }
             } else if (strClick.equals("管理员")) {
                 try {
-                    Vector<String> columns = new Vector<>(Arrays.asList("姓名", "密码", "权限等级"));
+                    Vector<String> columns = new Vector<>(Arrays.asList(usersColumns));
                     Vector<Vector<String>> vectors = DataBase.getInstance().getUserLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
@@ -324,7 +343,7 @@ public class MainGui {
                 }
             } else if (strClick.equals("事件")) {
                 try {
-                    Vector<String> columns = new Vector<>(Arrays.asList("id", "流水", "车牌","事件","备注","事件","经手员工"));
+                    Vector<String> columns = new Vector<>(Arrays.asList(infoColumns));
                     Vector<Vector<String>> vectors = DataBase.getInstance().getInfoLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
@@ -343,7 +362,7 @@ public class MainGui {
         JMenuItem delMenuItem = new JMenuItem();
         delMenuItem.setText("删除本行");
         delMenuItem.addActionListener(evt -> {
-            int id = Integer.valueOf ((String) jTable.getValueAt(delete_row_id,0));
+            int id = Integer.valueOf((String) jTable.getValueAt(delete_row_id, 0));
             try {
                 DataBase.getInstance().deleteRow(PANEL_MODE, id);
                 tableModel.removeRow(delete_row_id);
@@ -355,25 +374,125 @@ public class MainGui {
 
         JMenuItem addMenuItem = new JMenuItem();
         addMenuItem.setText("添加新行");
-        delMenuItem.addActionListener(evt -> {
-            HashMap<String, String> map = getNewRow();
-            try {
-                DataBase.getInstance().addRow(PANEL_MODE, map);
-//                tableModel.addRow();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        addMenuItem.addActionListener(evt -> {
+            setAddRowDialog();
         });
 
         jPopupMenu.add(delMenuItem);
+        jPopupMenu.add(addMenuItem);
     }
 
-    private HashMap<String, String> getNewRow(){
-        HashMap<String, String> map = new HashMap<>();
 
+    JDialog dialogAddRow;
+
+    private void setAddRowDialog() {
         //create a dialog
+        dialogAddRow = new JDialog(frame);
+        dialogAddRow.setTitle("添加");
+        dialogAddRow.setLayout(new FlowLayout());
+        JPanel contentPanel = new JPanel();
+        dialogAddRow.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
+        String[] columnNames = new String[0];
+        if (PANEL_MODE.equals("管理员")) {
+            columnNames = usersColumns;
+        } else if (PANEL_MODE.equals("客户")) {
+            columnNames = customerColumns;
+        } else if (PANEL_MODE.equals("员工")) {
+            columnNames = stuffColumns;
+        } else if (PANEL_MODE.equals("车辆")) {
+            columnNames = carColumns;
+        } else if (PANEL_MODE.equals("事件")) {
+//            columnNames = infoColumns;//这里应该用更好的办法
+        }
+
+        for (String s : columnNames) {
+            if (!s.equals("id")) {
+                JPanel jPanel = new JPanel();
+                JLabel jLabel = new JLabel(s);
+                JTextField jTextField = new JTextField(10);
+                jPanel.add(jLabel, BorderLayout.WEST);
+                jPanel.add(jTextField, BorderLayout.EAST);
+                contentPanel.add(jPanel);
+            }
+        }
+        JButton jButton = new JButton("确认");
+
+
+        jButton.addActionListener(e -> {
+            //set this hashmap
+            HashMap<String, String> map = getDataMap();
+            try {
+                DataBase.getInstance().addRow(PANEL_MODE, map);
+                tableModel.addRow(map2vector(map));
+                dialogAddRow.dispose();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                noticeMsg("添加数据失败");
+            }
+        });
+        contentPanel.add(jButton);
+        dialogAddRow.setContentPane(contentPanel);
+        dialogAddRow.pack();
+        setCenter(dialogAddRow);
+    }
+
+    /**
+     * 获得用户填入的新行的数据
+     *
+     * @return
+     */
+    private HashMap<String, String> getDataMap() {
+        HashMap<String, String> map = new HashMap<>();
+        Component[] components = dialogAddRow.getContentPane().getComponents();
+        for (int i = 0; i < components.length - 1; i++) {//不算button
+            JPanel jPanel = (JPanel) components[i];
+            String key = ((JLabel) jPanel.getComponents()[0]).getText();
+            String value = ((JTextField) jPanel.getComponents()[1]).getText();
+            map.put(key, value);
+        }
         return map;
+    }
+
+    /**
+     * hashmap转vector，方便addRow
+     *
+     * @param map
+     * @return
+     */
+    private Vector<String> map2vector(HashMap<String, String> map) {
+        Vector<String> vector = new Vector<>();
+
+        String[] columnNames;
+        if (PANEL_MODE.equals("管理员")) {
+            columnNames = usersColumns;
+        } else if (PANEL_MODE.equals("客户")) {
+            columnNames = customerColumns;
+        } else if (PANEL_MODE.equals("员工")) {
+            columnNames = stuffColumns;
+        } else if (PANEL_MODE.equals("车辆")) {
+            columnNames = carColumns;
+        } else if (PANEL_MODE.equals("事件")) {
+            columnNames = infoColumns;
+        } else {
+            columnNames = new String[0];
+        }
+
+//        if (columnNames[0].equals("id")) {
+//            int maxId = Integer.valueOf((String) jTable.getValueAt(jTable.getRowCount() - 1, 0));
+//            vector.add(String.valueOf(maxId + 1));
+//        }
+        for (String s : columnNames) {
+            if (s.equals("id")) continue;
+            String v = map.get(s);
+            if (v != null) {
+                vector.add(v);
+            } else {
+                vector.add("");
+            }
+        }
+
+        return vector;
     }
 
 }
