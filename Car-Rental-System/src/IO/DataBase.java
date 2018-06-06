@@ -1,6 +1,6 @@
 package IO;
 
-import org.jetbrains.annotations.Nullable;
+import GUI.DataNameUtils;
 
 import java.sql.*;
 import java.util.*;
@@ -174,75 +174,51 @@ public class DataBase {
      * @param id
      * @throws SQLException
      */
-    public void deleteRow(String tableMode, int id) throws SQLException {
+    public void deleteRow(String tableMode, String id) throws SQLException {
         Statement statement = connection.createStatement();
-        String tableName = tableMode2Name(tableMode);
+        String tableName = DataNameUtils.tableMode2Name(tableMode);
         if (tableName != null) {
-            String sql = "DELETE FROM " + tableName + " WHERE id = " + id;
-            System.out.println(sql);
-            statement.execute(sql);
+            if (tableName.equals("users")) {
+                String sql = "DELETE FROM " + tableName + " WHERE name = '" + id + "'";
+                System.out.println(sql);
+                statement.execute(sql);
+            } else {
+                String sql = "DELETE FROM " + tableName + " WHERE id = " + id;
+                System.out.println(sql);
+                statement.execute(sql);
+            }
         }
         statement.close();
     }
 
     /**
      * 更新数据
+     *
      * @param value
      * @throws SQLException
      */
-    public void updateData(String value) throws SQLException {
+    public void updateData(String tableMode, String name, String value, String primaryKey) throws SQLException {
+        String tableName = DataNameUtils.tableMode2Name(tableMode);
         Statement statement = connection.createStatement();
-    }
-
-    @Nullable
-    private String name2name(String strIn) {
-        if (strIn.equals("姓名")) {
-            return "name";
-        } else if (strIn.equals("品牌")) {
-            return "brand";
-        } else if (strIn.equals("车牌号")) {
-            return "license";
-        } else if (strIn.equals("租金")) {
-            return "cost";
-        } else if (strIn.equals("车况")) {
-            return "status";
-        } else if (strIn.equals("年龄")) {
-            return "age";
-        } else if (strIn.equals("是否会员")) {
-            return "member";
-        } else if (strIn.equals("密码")) {
-            return "password";
-        } else if (strIn.equals("权限等级")) {
-            return "author";
-        } else if (strIn.equals("押金")) {
-            return "pledge";
+        if (tableName.equals("users")) {
+            String sql;
+            if (DataNameUtils.isIntColumn(name)) {
+                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "=" + value + " WHERE name = '" + primaryKey + "'";
+            } else {
+                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "='" + value + "' WHERE name = '" + primaryKey + "'";
+            }
+            System.out.println(sql);
+            statement.execute(sql);
+        } else {
+            String sql;
+            if (DataNameUtils.isIntColumn(name)) {
+                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "=" + value + " WHERE id = '" + primaryKey + "'";
+            } else {
+                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "='" + value + "' WHERE id = '" + primaryKey + "'";
+            }
+            System.out.println(sql);
+            statement.execute(sql);
         }
-        return null;
-    }
-
-    private boolean isIntColumn(String strIn) {
-        if (strIn.equals("姓名")) {
-            return false;
-        } else if (strIn.equals("品牌")) {
-            return false;
-        } else if (strIn.equals("车牌号")) {
-            return false;
-        } else if (strIn.equals("租金")) {
-            return true;
-        } else if (strIn.equals("车况")) {
-            return true;
-        } else if (strIn.equals("年龄")) {
-            return true;
-        } else if (strIn.equals("是否会员")) {
-            return false;
-        } else if (strIn.equals("密码")) {
-            return true;
-        } else if (strIn.equals("权限等级")) {
-            return false;
-        } else if (strIn.equals("押金")) {
-            return false;
-        }
-        return false;
     }
 
     /**
@@ -254,29 +230,31 @@ public class DataBase {
      */
     public void addRow(String tableMode, HashMap<String, String> data) throws SQLException {
         Statement statement = connection.createStatement();
-        String tableName = tableMode2Name(tableMode);
+        String tableName = DataNameUtils.tableMode2Name(tableMode);
         if (tableName != null) {
             StringBuilder columns = new StringBuilder("");
             StringBuilder values = new StringBuilder("");
             Set<String> keySet = data.keySet();
             Iterator<String> iterator = keySet.iterator();
+
             boolean isFirst = true;
             while (iterator.hasNext()) {
                 String s = iterator.next();
+                System.out.println(s);
                 if (isFirst) {
                     isFirst = false;
-                    columns.append(name2name(s));
-                    if (isIntColumn(s)) {
+                    columns.append(DataNameUtils.name2name(s));
+                    if (DataNameUtils.isIntColumn(s)) {
                         values.append(data.get(s));
-                    }else{
-                        values.append("'"+data.get(s)+"'");
+                    } else {
+                        values.append("'" + data.get(s) + "'");
                     }
                 } else {
-                    columns.append("," + name2name(s));
-                    if (isIntColumn(s)) {
-                        values.append(","+data.get(s));
-                    }else{
-                        values.append(",'"+data.get(s)+"'");
+                    columns.append("," + DataNameUtils.name2name(s));
+                    if (DataNameUtils.isIntColumn(s)) {
+                        values.append("," + data.get(s));
+                    } else {
+                        values.append(",'" + data.get(s) + "'");
                     }
                 }
             }
@@ -284,25 +262,6 @@ public class DataBase {
             System.out.println(sql);
             statement.execute(sql);
             statement.close();
-        }
-    }
-
-    private String tableMode2Name(String tableMode) {
-        if (tableMode.equals("车辆")) {
-            return "car";
-        } else if (tableMode.equals("顾客")) {
-            return "customer";
-        }
-        if (tableMode.equals("信息")) {
-            return "info";
-        }
-        if (tableMode.equals("员工")) {
-            return "stuff";
-        }
-        if (tableMode.equals("管理员")) {
-            return "users";
-        } else {
-            return null;
         }
     }
 
