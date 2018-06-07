@@ -1,6 +1,7 @@
 package IO;
 
-import GUI.DataNameUtils;
+import GUI.MainGui;
+import Support.DataNameUtils;
 
 import java.sql.*;
 import java.util.*;
@@ -14,7 +15,7 @@ public class DataBase {
     private Connection connection;
 
     /**
-     * 单例
+     * singleton
      */
     private static class InnerHelper {
         private final static DataBase dataBase = new DataBase();
@@ -48,8 +49,8 @@ public class DataBase {
     /**
      * return users' authority
      *
-     * @param name
-     * @param psw
+     * @param name 输入的用户名
+     * @param psw  输入的密码
      * @return authority, -1->no found, 1->root user, 2->administrator, 3->normal user
      * @throws SQLException
      */
@@ -70,8 +71,8 @@ public class DataBase {
     /**
      * 以下五个getLists都为从数据库中获得对应的数据
      *
-     * @return
-     * @throws SQLException
+     * @return 获得的数据项
+     * @throws SQLException 语句错误或者受到约束
      */
     public Vector<Vector<String>> getCarLists() throws SQLException {
         Statement statement = connection.createStatement();
@@ -79,7 +80,7 @@ public class DataBase {
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= 5; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= DataNameUtils.carColumns.length; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
@@ -94,7 +95,7 @@ public class DataBase {
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= 4; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= DataNameUtils.customerColumns.length; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
@@ -109,7 +110,7 @@ public class DataBase {
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= 3; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= DataNameUtils.stuffColumns.length; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
@@ -118,13 +119,21 @@ public class DataBase {
         return lists2vectors(lists);
     }
 
-    public Vector<Vector<String>> getUserLists() throws SQLException {
+    public Vector<Vector<String>> getUserLists(int authority, String userName) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+        String sql = null;
+        if (authority == 1){
+            sql = "SELECT * FROM users";
+        }else if (authority == 2){
+            sql = "SELECT * FROM users WHERE author <> 1";
+        }else if (authority == 3){
+            sql = "SELECT * FROM users WHERE name = '"+userName+"'";
+        }
+        ResultSet resultSet = statement.executeQuery(sql);
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= 3; i++) {//从1开始，很奇怪的设定。。。
+            for (int i = 1; i <= DataNameUtils.usersColumns.length; i++) {//从1开始，很奇怪的设定。。。
                 tempList.add(resultSet.getString(i));
             }
             lists.add(tempList);
@@ -132,20 +141,24 @@ public class DataBase {
         statement.close();
         return lists2vectors(lists);
     }
+
 
     public Vector<Vector<String>> getInfoLists() throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT info.infoid ,info.moychange, car.license, info.event, info.detailevent, info.time, stuff.name\n" +
-                "FROM info,car,stuff\n" +
-                "WHERE info.license = car.license AND info.stuffid = stuff.id\n");
+        System.out.println("SELECT info.infoid , info.moychange, car.license, customer.name, info.event, info.detailevent, info.time, stuff.name\n" +
+                "FROM info,car,stuff,customer\n"+
+                "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid");
+        ResultSet resultSet = statement.executeQuery("SELECT info.infoid , info.moychange, car.license, customer.id,customer.name, info.event, info.detailevent, info.time, stuff.id,stuff.name\n" +
+                "FROM info,car,stuff,customer\n"+
+                "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid");
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
             ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= 7; i++) {//从1开始，很奇怪的设定。。。
-                if (i == 4) {
-                    switch (resultSet.getInt(i)) {
+            for (int i = 1; i <= DataNameUtils.infoColumns.length; i++) {//从1开始，很奇怪的设定。。。
+                if (i == 6) {
+                    switch (resultSet.getInt(i)) {//eventid to event
                         case 1:
-                            tempList.add("损坏");
+                            tempList.add("损坏维修");
                             break;
                         case 2:
                             tempList.add("罚款");
@@ -170,63 +183,55 @@ public class DataBase {
     /**
      * 在数据库中级联删除一行
      *
-     * @param tableMode
-     * @param id
-     * @throws SQLException
+     * @param tableMode  表格模式的标志字符串
+     * @param primaryKey 主键的值
+     * @throws SQLException 语句错误或者受到约束
      */
-    public void deleteRow(String tableMode, String id) throws SQLException {
-        Statement statement = connection.createStatement();
+    public void deleteRow(String tableMode, String primaryKey) throws SQLException {
         String tableName = DataNameUtils.tableMode2Name(tableMode);
-        if (tableName != null) {
-            if (tableName.equals("users")) {
-                String sql = "DELETE FROM " + tableName + " WHERE name = '" + id + "'";
-                System.out.println(sql);
-                statement.execute(sql);
-            } else {
-                String sql = "DELETE FROM " + tableName + " WHERE id = " + id;
-                System.out.println(sql);
-                statement.execute(sql);
-            }
-        }
-        statement.close();
+
+        String primaryKeyName = DataNameUtils.primaryKeyMap.get(tableName);
+        if (primaryKeyName == null) primaryKeyName = "id";
+        String sql = "DELETE FROM " + tableName + " WHERE " + primaryKeyName + " = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, primaryKey);
+        preparedStatement.execute();
+
     }
 
     /**
      * 更新数据
      *
-     * @param value
-     * @throws SQLException
+     * @param tableMode  表格模式的标志字符串
+     * @param name       更新属性的列名
+     * @param value      更新后的值
+     * @param primaryKey 主键的值
+     * @throws SQLException 语句错误或者受到约束
      */
+
     public void updateData(String tableMode, String name, String value, String primaryKey) throws SQLException {
         String tableName = DataNameUtils.tableMode2Name(tableMode);
-        Statement statement = connection.createStatement();
-        if (tableName.equals("users")) {
-            String sql;
-            if (DataNameUtils.isIntColumn(name)) {
-                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "=" + value + " WHERE name = '" + primaryKey + "'";
-            } else {
-                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "='" + value + "' WHERE name = '" + primaryKey + "'";
-            }
-            System.out.println(sql);
-            statement.execute(sql);
-        } else {
-            String sql;
-            if (DataNameUtils.isIntColumn(name)) {
-                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "=" + value + " WHERE id = '" + primaryKey + "'";
-            } else {
-                sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + "='" + value + "' WHERE id = '" + primaryKey + "'";
-            }
-            System.out.println(sql);
-            statement.execute(sql);
-        }
+
+        if (name.equals("事件")) value = DataNameUtils.swtichEventId(value);
+
+        //拿到主键的名字
+        String primaryKeyName = DataNameUtils.primaryKeyMap.get(tableName);
+        if (primaryKeyName == null) primaryKeyName = "id";
+
+        String sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + " = ? where " + primaryKeyName + " = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, value);
+        preparedStatement.setString(2, primaryKey);
+        System.out.println(preparedStatement.toString());
+        preparedStatement.execute();
     }
 
     /**
      * 添加行
      *
-     * @param tableMode
-     * @param data
-     * @throws SQLException
+     * @param tableMode 表格模式的标志字符串
+     * @param data      一张哈希表存新数据
+     * @throws SQLException 语句错误或者受到约束
      */
     public void addRow(String tableMode, HashMap<String, String> data) throws SQLException {
         Statement statement = connection.createStatement();
@@ -241,19 +246,14 @@ public class DataBase {
             while (iterator.hasNext()) {
                 String s = iterator.next();
                 System.out.println(s);
-                if (isFirst) {
-                    isFirst = false;
-                    columns.append(DataNameUtils.name2name(s));
-                    if (DataNameUtils.isIntColumn(s)) {
-                        values.append(data.get(s));
-                    } else {
+                String value = data.get(s);
+                if (value != null) {
+                    if (isFirst) {//第一个不加逗号
+                        isFirst = false;
+                        columns.append(DataNameUtils.name2name(s));
                         values.append("'" + data.get(s) + "'");
-                    }
-                } else {
-                    columns.append("," + DataNameUtils.name2name(s));
-                    if (DataNameUtils.isIntColumn(s)) {
-                        values.append("," + data.get(s));
                     } else {
+                        columns.append("," + DataNameUtils.name2name(s));
                         values.append(",'" + data.get(s) + "'");
                     }
                 }
@@ -268,14 +268,14 @@ public class DataBase {
     /**
      * 二维ArrayList转换为二维Vector
      *
-     * @param lists
-     * @return
+     * @param lists 待转换的二维list
+     * @return 二维Vector
      */
     private Vector<Vector<String>> lists2vectors(ArrayList<ArrayList<String>> lists) {
         Vector<Vector<String>> vectors = new Vector<>();
 
-        for (int i = 0; i < lists.size(); i++) {
-            vectors.add(new Vector<>(lists.get(i)));
+        for (ArrayList<String> list : lists) {
+            vectors.add(new Vector<>(list));
         }
         return vectors;
     }

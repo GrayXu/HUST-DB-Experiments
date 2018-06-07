@@ -1,6 +1,7 @@
 package GUI;
 
 import IO.DataBase;
+import Support.DataNameUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 public class MainGui {
 
@@ -70,24 +72,20 @@ public class MainGui {
             textDialogPsw = new JPasswordField(10);
             JButton butLogin = new JButton("登录");
 
-            JPanel namePanel = new JPanel();
+            JPanelOpen namePanel = new JPanelOpen();
             namePanel.add(labelName, BorderLayout.WEST);
             namePanel.add(textDialogName, BorderLayout.EAST);
-            namePanel.setBackground(null);
-            namePanel.setOpaque(false);
 
-            JPanel pswPanel = new JPanel();
+            JPanelOpen pswPanel = new JPanelOpen();
             pswPanel.add(labelPsw, BorderLayout.WEST);
             pswPanel.add(textDialogPsw, BorderLayout.EAST);
-            pswPanel.setBackground(null);
-            pswPanel.setOpaque(false);
 
             dialogLogin.getContentPane().setLayout(new BorderLayout());
             dialogLogin.getContentPane().add(namePanel, BorderLayout.NORTH);
             dialogLogin.getContentPane().add(pswPanel, BorderLayout.CENTER);
             dialogLogin.getContentPane().add(butLogin, BorderLayout.SOUTH);
             butLogin.addActionListener(otherListener);
-            dialogLogin.setSize(new Dimension(200,150));
+            dialogLogin.setSize(new Dimension(200, 150));
 
             setCenter(dialogLogin);
             return frame;
@@ -153,11 +151,13 @@ public class MainGui {
         frame.setSize(1025, 635);
         frame.setVisible(true);
 
-        JTextField field = new JTextField();
-        field.setFont(new Font("宋体", Font.BOLD, 18));
+        JTextFiledOpen field = new JTextFiledOpen();
+        field.setFont(new Font("宋体", Font.BOLD, 30));
         field.setText("汽车租借信息系统 数据库实验 2018春季");
+        field.setBorder(null);
         field.setEditable(false);
 
+        frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(field, BorderLayout.CENTER);
         jMainPanel.updateUI();
     }
@@ -202,12 +202,13 @@ public class MainGui {
 
         JMenu menuManage = new JMenu("管理");
         ArrayList<JMenuItem> itemManage = new ArrayList<>();
-        itemManage.add(new JMenuItem("客户"));
-        itemManage.add(new JMenuItem("车辆"));
-        itemManage.add(new JMenuItem("员工"));
-        if (authority == 1) {
-            itemManage.add(new JMenuItem("管理员"));
+        itemManage.add(new JMenuItem("车辆"));//普通用户不能修改车辆表, we define this logic in updateData function
+        if (authority != 3) {
+            itemManage.add(new JMenuItem("顾客"));
+            itemManage.add(new JMenuItem("员工"));
         }
+        //以下两张表普通用户只能看到与他相关的
+        itemManage.add(new JMenuItem("用户"));
         itemManage.add(new JMenuItem("事件"));
 
         for (JMenuItem i :
@@ -254,36 +255,50 @@ public class MainGui {
             }
         };
 
-        //如果权限不够只能进行查看
-        if (authority != 1 && authority != 2) {
+//        System.out.println(PANEL_MODE + ":" + authority);
+
+        /**
+         * 修改权限的体现
+         * */
+        if ((PANEL_MODE.equals("车辆") || PANEL_MODE.equals("事件")) & authority == 3) {//顾客不能修改车辆表和事件表
             jTable = new JTable() {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
             };
-        }
+        } else if (PANEL_MODE.equals("用户") & authority != 1) {//除了超级管理员，不能修改权限和绑定顾客
+            jTable = new JTable() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column != 2 && column != 3 && column != 0;
+                }
+            };
+        } else if (PANEL_MODE.equals("事件") && authority != 3) {//修改事件表的时候在顾客和经手员工的地方，只能修改对应id
+            jTable = new JTable() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column != 4 && column != 9 && column != 0;
+                }
+            };
+        } else if (columns.get(0).equals("id")) {//id不能被修改
+            jTable = new JTable() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column != 0;
+                }
+            };
 
-        /**利用列名来控制修改权限的控制*/
-        if (!columns.get(0).equals("id")) {
+        } else {
             jTable = new JTable() {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     return true;
                 }
             };
-        } else {
-            jTable = new JTable() {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    if (column == 0) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            };
         }
+
+
         jTable.getTableHeader().setReorderingAllowed(false);
         jTable.setModel(tableModel);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -291,14 +306,54 @@ public class MainGui {
             public void mouseClicked(MouseEvent e) {
                 mouseRightButtonClick(e, jTable);
             }
-
         });
 
         JScrollPane scrollPane = new JScrollPane(jTable);
-        scrollPane.setPreferredSize(new Dimension(500, 350));
+        scrollPane.setPreferredSize(new Dimension(1000, 350));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jMainPanel.add(scrollPane, BorderLayout.NORTH);
+        jMainPanel.add(scrollPane, BorderLayout.SOUTH);
         jMainPanel.updateUI();
+    }
+
+    public boolean checkUpdateLegal(String tableMode, String name, String value, String primaryKey) {
+        //check is legal or not
+        if (value.contains("'")) {
+            noticeMsg("新数据中含有非法字段");
+            return false;
+        }
+        if (name.equals("事件")) {
+            if (DataNameUtils.eventName.indexOf(value) == -1) {
+                noticeMsg("事件只有四种类型：借车、还车、损坏维修、罚款");
+                return false;//不合法事件代码
+            }
+        }
+        if (value.equals("时间")) {
+            if (value.length() != 8 || Pattern.compile("[^\\d]+").matcher(value).find()) {
+                noticeMsg("时间格式错误");
+                return false;
+            }
+        }
+        if (value.equals("车牌号")) {
+            if (value.length() != 7) {
+                noticeMsg("车牌号格式错误");
+                return false;
+            }
+        }
+        if (value.equals("车况")) {
+            if (Integer.valueOf(value) < 1 || Integer.valueOf(value) > 5) {
+                noticeMsg("只能输入1-5的数字");
+                return false;
+            }
+        }
+        if (value.equals("是否会员")) {
+            if (!value.equals("Y") && !value.equals("N")) {
+                noticeMsg("只能输入Y或N");
+                return false;
+            }
+        }
+        //TODO: 外键参考部分、捆绑更新
+
+        return true;
     }
 
     /**
@@ -331,13 +386,15 @@ public class MainGui {
         String strClick = e.getActionCommand();
         System.out.println(strClick);
         if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
+            PANEL_MODE = strClick;
             frame.getContentPane().removeAll();//移除原有的东西
-            if (strClick.equals("客户")) {
+            if (strClick.equals("顾客")) {
                 try {
                     Vector<String> columns = new Vector<>(Arrays.asList(DataNameUtils.customerColumns));
                     Vector<Vector<String>> vectors = DataBase.getInstance().getCustomerLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
+                    e1.printStackTrace();
                     noticeMsg("数据库发生错误");
                 }
             } else if (strClick.equals("车辆")) {
@@ -355,15 +412,17 @@ public class MainGui {
                     Vector<Vector<String>> vectors = DataBase.getInstance().getStuffLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
+                    e1.printStackTrace();
                     noticeMsg("数据库发生错误");
                 }
-            } else if (strClick.equals("管理员")) {
+            } else if (strClick.equals("用户")) {
                 try {
                     Vector<String> columns = new Vector<>(Arrays.asList(DataNameUtils.usersColumns));
-                    Vector<Vector<String>> vectors = DataBase.getInstance().getUserLists();
+                    Vector<Vector<String>> vectors = DataBase.getInstance().getUserLists(authority, userName);
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
-                    noticeMsg("查询管理员数据时，数据库发生错误");
+                    e1.printStackTrace();
+                    noticeMsg("查询用户数据时，数据库发生错误");
                 }
             } else if (strClick.equals("事件")) {
                 try {
@@ -371,10 +430,11 @@ public class MainGui {
                     Vector<Vector<String>> vectors = DataBase.getInstance().getInfoLists();
                     setTablePanel(vectors, columns);
                 } catch (SQLException e1) {
+                    e1.printStackTrace();
                     noticeMsg("查询事件数据时，数据库发生错误");
                 }
             }
-            PANEL_MODE = strClick;
+
         }
     };
 
@@ -456,8 +516,13 @@ public class MainGui {
 
         String[] columnNames = DataNameUtils.getColumnNamesByMode(PANEL_MODE);
         try {
-            DataBase.getInstance().updateData(PANEL_MODE, columnNames[column], aValue.toString(), (String) jTable.getValueAt(row, 0));
-            return true;
+            if (checkUpdateLegal(PANEL_MODE, columnNames[column], aValue.toString(), (String) jTable.getValueAt(row, 0))) {
+                DataBase.getInstance().updateData(PANEL_MODE, columnNames[column], aValue.toString(), (String) jTable.getValueAt(row, 0));
+                return true;
+            } else {
+                return false;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

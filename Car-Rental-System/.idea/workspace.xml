@@ -31,43 +31,43 @@
       <file leaf-file-name="MainGui.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="261" column="33" lean-forward="true" selection-start-line="261" selection-start-column="33" selection-end-line="261" selection-end-column="33" />
+            <state relative-caret-position="435">
+              <caret line="353" column="27" lean-forward="true" selection-start-line="353" selection-start-column="27" selection-end-line="353" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7351#7352#0" expanded="true" />
-                <element signature="e#7407#7408#0" expanded="true" />
-                <element signature="e#8007#8182#0" expanded="true" />
-                <element signature="e#8181#8182#0" expanded="true" />
-                <element signature="e#8288#8462#0" expanded="true" />
-                <element signature="e#8461#8462#0" expanded="true" />
-                <element signature="e#8502#8808#0" expanded="true" />
-                <element signature="e#8807#8808#0" expanded="true" />
-                <element signature="e#8950#9135#0" expanded="true" />
-                <element signature="e#9134#9135#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BackgrouPanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/BackgrouPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#8248#8423#0" expanded="true" />
+                <element signature="e#8422#8423#0" expanded="true" />
+                <element signature="e#8530#8741#0" expanded="true" />
+                <element signature="e#8740#8741#0" expanded="true" />
+                <element signature="e#8858#9069#0" expanded="true" />
+                <element signature="e#9068#9069#0" expanded="true" />
+                <element signature="e#9151#9332#0" expanded="true" />
+                <element signature="e#9331#9332#0" expanded="true" />
+                <element signature="e#9373#9547#0" expanded="true" />
+                <element signature="e#9546#9547#0" expanded="true" />
+                <element signature="method#createPopupMenu#0;class#MainGui#0" expanded="false" />
+                <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
+                <element signature="method#getDataMap#0;class#MainGui#0" expanded="false" />
+                <element signature="method#map2vector#0;class#MainGui#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="DataNameUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/DataNameUtils.java">
+        <entry file="file://$PROJECT_DIR$/src/Support/DataNameUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="17" column="45" lean-forward="true" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-              <folding />
+            <state relative-caret-position="242">
+              <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2176#2177#0" expanded="true" />
+                <element signature="e#2222#2223#0" expanded="true" />
+                <element signature="e#2385#2386#0" expanded="true" />
+                <element signature="e#2448#2449#0" expanded="true" />
+                <element signature="e#2754#2755#0" expanded="true" />
+                <element signature="e#2809#2810#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -75,32 +75,35 @@
       <file leaf-file-name="DataBase.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1311">
-              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state relative-caret-position="119">
+              <caret line="201" column="7" lean-forward="false" selection-start-line="201" selection-start-column="7" selection-end-line="201" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#initConnect#0;class#DataBase#0" expanded="false" />
-                <element signature="method#checkUser#0;class#DataBase#0" expanded="false" />
-                <element signature="method#getCarLists#0;class#DataBase#0" expanded="false" />
-                <element signature="method#getCustomerLists#0;class#DataBase#0" expanded="false" />
-                <element signature="method#getStuffLists#0;class#DataBase#0" expanded="false" />
+                <element signature="method#DataBase#0;class#DataBase#0" expanded="false" />
                 <element signature="method#getUserLists#0;class#DataBase#0" expanded="false" />
-                <element signature="method#getInfoLists#0;class#DataBase#0" expanded="false" />
-                <marker date="1528198050502" expanded="true" signature="1471:1490" ph="SELECT * FRO... users" />
-                <marker date="1528198050502" expanded="true" signature="2090:2104" ph="SELECT * FRO... users" />
-                <marker date="1528198050502" expanded="true" signature="2090:2107" ph="SELECT * FRO... car" />
-                <marker date="1528198050502" expanded="true" signature="2700:2722" ph="SELECT * FRO... customer" />
-                <marker date="1528198050502" expanded="true" signature="3312:3331" ph="SELECT * FRO... stuff" />
-                <marker date="1528198050502" expanded="true" signature="3920:3939" ph="SELECT * FRO... users" />
-                <marker date="1528198050502" expanded="true" signature="4528:4753" ph="SELECT info.... info" />
-                <marker date="1528198050502" expanded="true" signature="4528:4755" ph="SELECT * FRO... users" />
-                <marker date="1528198050502" expanded="true" signature="6193:6248" ph="DELETE FROM " />
-                <marker date="1528198050502" expanded="true" signature="6383:6424" ph="DELETE FROM " />
-                <marker date="1528198050502" expanded="true" signature="7034:7148" ph="UPDATE missi... " />
-                <marker date="1528198050502" expanded="true" signature="7195:7311" ph="UPDATE missi... " />
-                <marker date="1528198050502" expanded="true" signature="7516:7628" ph="UPDATE missi... " />
-                <marker date="1528198050502" expanded="true" signature="7675:7789" ph="UPDATE missi... " />
-                <marker date="1528198050502" expanded="true" signature="9378:9471" ph="INSERT INTO missingValue... " />
+                <element signature="method#deleteRow#0;class#DataBase#0" expanded="false" />
+                <marker date="1528380948879" expanded="true" signature="1516:1535" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="2153:2167" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="2153:2170" ph="SELECT * FRO... car" />
+                <marker date="1528380948879" expanded="true" signature="2793:2815" ph="SELECT * FRO... customer" />
+                <marker date="1528380948879" expanded="true" signature="3440:3459" ph="SELECT * FRO... stuff" />
+                <marker date="1528380948879" expanded="true" signature="4131:4150" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="4207:4244" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="4301:4333" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="4301:4335" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="4301:4348" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="5353:5541" ph="SELECT info.... info" />
+                <marker date="1528380948879" expanded="true" signature="5353:5657" ph="SELECT * FRO... users" />
+                <marker date="1528380948879" expanded="true" signature="7180:7192" ph="DELETE FROM " />
+                <marker date="1528380948879" expanded="true" signature="7180:7215" ph="DELETE FROM " />
+                <marker date="1528380948879" expanded="true" signature="7180:7242" ph="DELETE FROM " />
+                <marker date="1528380948879" expanded="true" signature="8061:8068" ph="UPDATE missi... " />
+                <marker date="1528380948879" expanded="true" signature="8061:8089" ph="UPDATE missi... " />
+                <marker date="1528380948879" expanded="true" signature="8061:8090" ph="UPDATE missi... " />
+                <marker date="1528380948879" expanded="true" signature="8061:8137" ph="UPDATE missi... " />
+                <marker date="1528380948879" expanded="true" signature="8061:8138" ph="UPDATE missi... " />
+                <marker date="1528380948879" expanded="true" signature="8061:8164" ph="UPDATE ? fro... " />
+                <marker date="1528380948879" expanded="true" signature="9775:9868" ph="INSERT INTO missingValue... " />
               </folding>
             </state>
           </provider>
@@ -117,17 +120,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>package test\;\n\npublic class test \{\n    \n    \n\}\n</find>
-      <find>import java\.util\.Scanner\;\n\npublic class Main \{\n\n    public static void  main\(String args\[\]\)\{\n        int a\;\n        Scanner scanner \= new Scanner\(System\.in\)\;\n        a \= scanner\.nextInt\(\)\;\n        int b\[\] \= new int\[a\]\;\n        for \(int i \= 0\; i \&lt; a\; i\+\+\) \{\n            b\[i\] \= scanner\.nextInt\(\)\;\n        \}\n        int x \= b\[0\]\;\n        int y \= b\[1\]\;\n        for \(int i \= 2\; i \&lt; a\; i\+\+\) \{\n            if \(\(x\&lt;i \&amp;\&amp; i\&lt;y\) \|\| \(y\&lt;i\) \&amp;\&amp;\(i\&lt;x\)\)\{\n                \n            \}\n        \}\n    \}\n\}\n</find>
-      <find>System.out</find>
-      <find>IO</find>
-      <find>image</find>
-      <find>登录</find>
       <find>jTable</find>
       <find>tableModel</find>
       <find>delete_row_id</find>
       <find>map</find>
-      <find>PANEL_MODE</find>
       <find>stuffColumns</find>
       <find>pledge</find>
       <find>car</find>
@@ -146,12 +142,22 @@
       <find>ContentPane</find>
       <find>jPanel</find>
       <find>jMainPanel</find>
+      <find>管理员</find>
+      <find>JTable</find>
+      <find>INSERT</find>
+      <find>客户</find>
+      <find>updateData</find>
+      <find>PANEL_MODE</find>
+      <find>System</find>
+      <find>车牌号</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>DataNameUtil.isIntColumn</replace>
       <replace>Utils.</replace>
       <replace>DataNameUtils.infoColumns</replace>
+      <replace>用户</replace>
+      <replace>顾客</replace>
     </replaceStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -174,10 +180,13 @@
         <option value="$PROJECT_DIR$/src/MainGui.java" />
         <option value="$PROJECT_DIR$/src/GUI/loginPane.form" />
         <option value="$PROJECT_DIR$/lib/mysql-connector-java-8.0.11.jar!/com/mysql/cj/jdbc/result/ResultSetImpl.class" />
-        <option value="$PROJECT_DIR$/src/IO/DataBase.java" />
         <option value="$PROJECT_DIR$/src/GUI/HomePanel.java" />
         <option value="$PROJECT_DIR$/src/GUI/BackgrouPanel.java" />
         <option value="$PROJECT_DIR$/src/GUI/DataNameUtils.java" />
+        <option value="$PROJECT_DIR$/src/GUI/JTextFieldOpen.java" />
+        <option value="$PROJECT_DIR$/src/GUI/JPanelOpen.java" />
+        <option value="$PROJECT_DIR$/src/IO/DataBase.java" />
+        <option value="$PROJECT_DIR$/src/Support/DataNameUtils.java" />
         <option value="$PROJECT_DIR$/src/GUI/MainGui.java" />
       </list>
     </option>
@@ -188,10 +197,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="643" />
-    <option name="y" value="-17" />
-    <option name="width" value="974" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1237" />
+    <option name="width" value="690" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
@@ -209,10 +217,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -240,18 +244,35 @@
               <item name="Car-Rental-System" type="b2602c69:ProjectViewProjectNode" />
               <item name="Car-Rental-System" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="GUI" type="462c0819:PsiDirectoryNode" />
+              <item name="JPanelOpen.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
+            <path>
+              <item name="Car-Rental-System" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Car-Rental-System" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="IO" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Car-Rental-System" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Car-Rental-System" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Support" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Java/Algorithms" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="last.edited.regexp" value="12 123" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Workplace/HUST-DB-Experiments/Car-Rental-System/src/GUI/MainGui.java" />
@@ -438,30 +459,34 @@
       <workItem from="1526818638585" duration="53000" />
       <workItem from="1526824488142" duration="4760000" />
       <workItem from="1527176823731" duration="3572000" />
-      <workItem from="1528196270636" duration="14067000" />
+      <workItem from="1528196270636" duration="20094000" />
+      <workItem from="1528292791827" duration="15090000" />
+      <workItem from="1528351888187" duration="4022000" />
+      <workItem from="1528376302689" duration="8824000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157427000" />
+    <option name="totallyTimeSpent" value="191390000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3244963" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32343584" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20877944" sideWeight="0.50417536" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2078473" sideWeight="0.50417536" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2407211" sideWeight="0.49582464" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24284199" sideWeight="0.49582464" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25052083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12552084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -486,7 +511,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="142" />
+      <option name="time" value="146" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -497,116 +522,26 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2714">
-          <caret line="118" column="69" lean-forward="false" selection-start-line="118" selection-start-column="69" selection-end-line="118" selection-end-column="69" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#initConnect#0;class#DataBase#0" expanded="false" />
-            <element signature="method#checkUser#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getStuffLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getUserLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getInfoLists#0;class#DataBase#0" expanded="false" />
-            <marker date="1528198050502" expanded="true" signature="1471:1490" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2104" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2107" ph="SELECT * FRO... car" />
-            <marker date="1528198050502" expanded="true" signature="2700:2722" ph="SELECT * FRO... customer" />
-            <marker date="1528198050502" expanded="true" signature="3312:3331" ph="SELECT * FRO... stuff" />
-            <marker date="1528198050502" expanded="true" signature="3920:3939" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="4528:4753" ph="SELECT info.... info" />
-            <marker date="1528198050502" expanded="true" signature="4528:4755" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="6193:6248" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="6383:6424" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="7034:7148" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7195:7311" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7516:7628" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7675:7789" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="9378:9471" ph="INSERT INTO missingValue... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/loginPane.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7351#7352#0" expanded="true" />
-            <element signature="e#7407#7408#0" expanded="true" />
-            <element signature="e#8007#8182#0" expanded="true" />
-            <element signature="e#8181#8182#0" expanded="true" />
-            <element signature="e#8288#8462#0" expanded="true" />
-            <element signature="e#8461#8462#0" expanded="true" />
-            <element signature="e#8502#8808#0" expanded="true" />
-            <element signature="e#8807#8808#0" expanded="true" />
-            <element signature="e#8950#9135#0" expanded="true" />
-            <element signature="e#9134#9135#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2484">
-          <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#initConnect#0;class#DataBase#0" expanded="false" />
-            <element signature="method#checkUser#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getStuffLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getUserLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getInfoLists#0;class#DataBase#0" expanded="false" />
-            <marker date="1528198050502" expanded="true" signature="1471:1490" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2104" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2107" ph="SELECT * FRO... car" />
-            <marker date="1528198050502" expanded="true" signature="2700:2722" ph="SELECT * FRO... customer" />
-            <marker date="1528198050502" expanded="true" signature="3312:3331" ph="SELECT * FRO... stuff" />
-            <marker date="1528198050502" expanded="true" signature="3920:3939" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="4528:4753" ph="SELECT info.... info" />
-            <marker date="1528198050502" expanded="true" signature="4528:4755" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="6193:6248" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="6383:6424" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="7034:7148" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7195:7311" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7516:7628" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7675:7789" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="9378:9471" ph="INSERT INTO missingValue... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/loginPane.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7351#7352#0" expanded="true" />
-            <element signature="e#7407#7408#0" expanded="true" />
-            <element signature="e#8007#8182#0" expanded="true" />
-            <element signature="e#8181#8182#0" expanded="true" />
-            <element signature="e#8288#8462#0" expanded="true" />
-            <element signature="e#8461#8462#0" expanded="true" />
-            <element signature="e#8502#8808#0" expanded="true" />
-            <element signature="e#8807#8808#0" expanded="true" />
-            <element signature="e#8950#9135#0" expanded="true" />
-            <element signature="e#9134#9135#0" expanded="true" />
+            <element signature="e#8248#8423#0" expanded="true" />
+            <element signature="e#8422#8423#0" expanded="true" />
+            <element signature="e#8530#8741#0" expanded="true" />
+            <element signature="e#8740#8741#0" expanded="true" />
+            <element signature="e#8858#9069#0" expanded="true" />
+            <element signature="e#9068#9069#0" expanded="true" />
+            <element signature="e#9151#9332#0" expanded="true" />
+            <element signature="e#9331#9332#0" expanded="true" />
+            <element signature="e#9373#9547#0" expanded="true" />
+            <element signature="e#9546#9547#0" expanded="true" />
+            <element signature="method#createPopupMenu#0;class#MainGui#0" expanded="false" />
+            <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
+            <element signature="method#getDataMap#0;class#MainGui#0" expanded="false" />
+            <element signature="method#map2vector#0;class#MainGui#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -617,28 +552,31 @@
           <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initConnect#0;class#DataBase#0" expanded="false" />
-            <element signature="method#checkUser#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getStuffLists#0;class#DataBase#0" expanded="false" />
+            <element signature="method#DataBase#0;class#DataBase#0" expanded="false" />
             <element signature="method#getUserLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getInfoLists#0;class#DataBase#0" expanded="false" />
-            <marker date="1528198050502" expanded="true" signature="1471:1490" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2104" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2107" ph="SELECT * FRO... car" />
-            <marker date="1528198050502" expanded="true" signature="2700:2722" ph="SELECT * FRO... customer" />
-            <marker date="1528198050502" expanded="true" signature="3312:3331" ph="SELECT * FRO... stuff" />
-            <marker date="1528198050502" expanded="true" signature="3920:3939" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="4528:4753" ph="SELECT info.... info" />
-            <marker date="1528198050502" expanded="true" signature="4528:4755" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="6193:6248" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="6383:6424" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="7034:7148" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7195:7311" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7516:7628" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7675:7789" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="9378:9471" ph="INSERT INTO missingValue... " />
+            <element signature="method#deleteRow#0;class#DataBase#0" expanded="false" />
+            <marker date="1528380948879" expanded="true" signature="1516:1535" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="2153:2167" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="2153:2170" ph="SELECT * FRO... car" />
+            <marker date="1528380948879" expanded="true" signature="2793:2815" ph="SELECT * FRO... customer" />
+            <marker date="1528380948879" expanded="true" signature="3440:3459" ph="SELECT * FRO... stuff" />
+            <marker date="1528380948879" expanded="true" signature="4131:4150" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4207:4244" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4333" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4335" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4348" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="5353:5541" ph="SELECT info.... info" />
+            <marker date="1528380948879" expanded="true" signature="5353:5657" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="7180:7192" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="7180:7215" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="7180:7242" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="8061:8068" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8089" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8090" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8137" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8138" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8164" ph="UPDATE ? fro... " />
+            <marker date="1528380948879" expanded="true" signature="9775:9868" ph="INSERT INTO missingValue... " />
           </folding>
         </state>
       </provider>
@@ -654,16 +592,20 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7351#7352#0" expanded="true" />
-            <element signature="e#7407#7408#0" expanded="true" />
-            <element signature="e#8007#8182#0" expanded="true" />
-            <element signature="e#8181#8182#0" expanded="true" />
-            <element signature="e#8288#8462#0" expanded="true" />
-            <element signature="e#8461#8462#0" expanded="true" />
-            <element signature="e#8502#8808#0" expanded="true" />
-            <element signature="e#8807#8808#0" expanded="true" />
-            <element signature="e#8950#9135#0" expanded="true" />
-            <element signature="e#9134#9135#0" expanded="true" />
+            <element signature="e#8248#8423#0" expanded="true" />
+            <element signature="e#8422#8423#0" expanded="true" />
+            <element signature="e#8530#8741#0" expanded="true" />
+            <element signature="e#8740#8741#0" expanded="true" />
+            <element signature="e#8858#9069#0" expanded="true" />
+            <element signature="e#9068#9069#0" expanded="true" />
+            <element signature="e#9151#9332#0" expanded="true" />
+            <element signature="e#9331#9332#0" expanded="true" />
+            <element signature="e#9373#9547#0" expanded="true" />
+            <element signature="e#9546#9547#0" expanded="true" />
+            <element signature="method#createPopupMenu#0;class#MainGui#0" expanded="false" />
+            <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
+            <element signature="method#getDataMap#0;class#MainGui#0" expanded="false" />
+            <element signature="method#map2vector#0;class#MainGui#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -674,28 +616,31 @@
           <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initConnect#0;class#DataBase#0" expanded="false" />
-            <element signature="method#checkUser#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getStuffLists#0;class#DataBase#0" expanded="false" />
+            <element signature="method#DataBase#0;class#DataBase#0" expanded="false" />
             <element signature="method#getUserLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getInfoLists#0;class#DataBase#0" expanded="false" />
-            <marker date="1528198050502" expanded="true" signature="1471:1490" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2104" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2107" ph="SELECT * FRO... car" />
-            <marker date="1528198050502" expanded="true" signature="2700:2722" ph="SELECT * FRO... customer" />
-            <marker date="1528198050502" expanded="true" signature="3312:3331" ph="SELECT * FRO... stuff" />
-            <marker date="1528198050502" expanded="true" signature="3920:3939" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="4528:4753" ph="SELECT info.... info" />
-            <marker date="1528198050502" expanded="true" signature="4528:4755" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="6193:6248" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="6383:6424" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="7034:7148" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7195:7311" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7516:7628" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7675:7789" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="9378:9471" ph="INSERT INTO missingValue... " />
+            <element signature="method#deleteRow#0;class#DataBase#0" expanded="false" />
+            <marker date="1528380948879" expanded="true" signature="1516:1535" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="2153:2167" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="2153:2170" ph="SELECT * FRO... car" />
+            <marker date="1528380948879" expanded="true" signature="2793:2815" ph="SELECT * FRO... customer" />
+            <marker date="1528380948879" expanded="true" signature="3440:3459" ph="SELECT * FRO... stuff" />
+            <marker date="1528380948879" expanded="true" signature="4131:4150" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4207:4244" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4333" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4335" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4348" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="5353:5541" ph="SELECT info.... info" />
+            <marker date="1528380948879" expanded="true" signature="5353:5657" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="7180:7192" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="7180:7215" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="7180:7242" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="8061:8068" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8089" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8090" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8137" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8138" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8164" ph="UPDATE ? fro... " />
+            <marker date="1528380948879" expanded="true" signature="9775:9868" ph="INSERT INTO missingValue... " />
           </folding>
         </state>
       </provider>
@@ -829,84 +774,138 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="64" column="13" lean-forward="false" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/JComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="2703" column="36" lean-forward="false" selection-start-line="2703" selection-start-column="31" selection-end-line="2703" selection-end-column="36" />
+        <state relative-caret-position="229">
+          <caret line="2730" column="16" lean-forward="false" selection-start-line="2730" selection-start-column="16" selection-end-line="2730" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/sql/PreparedStatement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1701">
+          <caret line="128" column="71" lean-forward="true" selection-start-line="128" selection-start-column="71" selection-end-line="128" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/sql/SQLException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/JPanelOpen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/BackgrouPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state relative-caret-position="138">
+          <caret line="6" column="27" lean-forward="true" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/JOptionPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="312" column="13" lean-forward="false" selection-start-line="312" selection-start-column="13" selection-end-line="312" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/JTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="2763" column="19" lean-forward="false" selection-start-line="2763" selection-start-column="19" selection-end-line="2763" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Support/DataNameUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2176#2177#0" expanded="true" />
+            <element signature="e#2222#2223#0" expanded="true" />
+            <element signature="e#2385#2386#0" expanded="true" />
+            <element signature="e#2448#2449#0" expanded="true" />
+            <element signature="e#2754#2755#0" expanded="true" />
+            <element signature="e#2809#2810#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1311">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        <state relative-caret-position="119">
+          <caret line="201" column="7" lean-forward="false" selection-start-line="201" selection-start-column="7" selection-end-line="201" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initConnect#0;class#DataBase#0" expanded="false" />
-            <element signature="method#checkUser#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getStuffLists#0;class#DataBase#0" expanded="false" />
+            <element signature="method#DataBase#0;class#DataBase#0" expanded="false" />
             <element signature="method#getUserLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getInfoLists#0;class#DataBase#0" expanded="false" />
-            <marker date="1528198050502" expanded="true" signature="1471:1490" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2104" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="2090:2107" ph="SELECT * FRO... car" />
-            <marker date="1528198050502" expanded="true" signature="2700:2722" ph="SELECT * FRO... customer" />
-            <marker date="1528198050502" expanded="true" signature="3312:3331" ph="SELECT * FRO... stuff" />
-            <marker date="1528198050502" expanded="true" signature="3920:3939" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="4528:4753" ph="SELECT info.... info" />
-            <marker date="1528198050502" expanded="true" signature="4528:4755" ph="SELECT * FRO... users" />
-            <marker date="1528198050502" expanded="true" signature="6193:6248" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="6383:6424" ph="DELETE FROM " />
-            <marker date="1528198050502" expanded="true" signature="7034:7148" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7195:7311" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7516:7628" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="7675:7789" ph="UPDATE missi... " />
-            <marker date="1528198050502" expanded="true" signature="9378:9471" ph="INSERT INTO missingValue... " />
+            <element signature="method#deleteRow#0;class#DataBase#0" expanded="false" />
+            <marker date="1528380948879" expanded="true" signature="1516:1535" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="2153:2167" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="2153:2170" ph="SELECT * FRO... car" />
+            <marker date="1528380948879" expanded="true" signature="2793:2815" ph="SELECT * FRO... customer" />
+            <marker date="1528380948879" expanded="true" signature="3440:3459" ph="SELECT * FRO... stuff" />
+            <marker date="1528380948879" expanded="true" signature="4131:4150" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4207:4244" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4333" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4335" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="4301:4348" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="5353:5541" ph="SELECT info.... info" />
+            <marker date="1528380948879" expanded="true" signature="5353:5657" ph="SELECT * FRO... users" />
+            <marker date="1528380948879" expanded="true" signature="7180:7192" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="7180:7215" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="7180:7242" ph="DELETE FROM " />
+            <marker date="1528380948879" expanded="true" signature="8061:8068" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8089" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8090" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8137" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8138" ph="UPDATE missi... " />
+            <marker date="1528380948879" expanded="true" signature="8061:8164" ph="UPDATE ? fro... " />
+            <marker date="1528380948879" expanded="true" signature="9775:9868" ph="INSERT INTO missingValue... " />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/DataNameUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="17" column="45" lean-forward="true" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="261" column="33" lean-forward="true" selection-start-line="261" selection-start-column="33" selection-end-line="261" selection-end-column="33" />
+        <state relative-caret-position="435">
+          <caret line="353" column="27" lean-forward="true" selection-start-line="353" selection-start-column="27" selection-end-line="353" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7351#7352#0" expanded="true" />
-            <element signature="e#7407#7408#0" expanded="true" />
-            <element signature="e#8007#8182#0" expanded="true" />
-            <element signature="e#8181#8182#0" expanded="true" />
-            <element signature="e#8288#8462#0" expanded="true" />
-            <element signature="e#8461#8462#0" expanded="true" />
-            <element signature="e#8502#8808#0" expanded="true" />
-            <element signature="e#8807#8808#0" expanded="true" />
-            <element signature="e#8950#9135#0" expanded="true" />
-            <element signature="e#9134#9135#0" expanded="true" />
+            <element signature="e#8248#8423#0" expanded="true" />
+            <element signature="e#8422#8423#0" expanded="true" />
+            <element signature="e#8530#8741#0" expanded="true" />
+            <element signature="e#8740#8741#0" expanded="true" />
+            <element signature="e#8858#9069#0" expanded="true" />
+            <element signature="e#9068#9069#0" expanded="true" />
+            <element signature="e#9151#9332#0" expanded="true" />
+            <element signature="e#9331#9332#0" expanded="true" />
+            <element signature="e#9373#9547#0" expanded="true" />
+            <element signature="e#9546#9547#0" expanded="true" />
+            <element signature="method#createPopupMenu#0;class#MainGui#0" expanded="false" />
+            <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
+            <element signature="method#getDataMap#0;class#MainGui#0" expanded="false" />
+            <element signature="method#map2vector#0;class#MainGui#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -1,0 +1,116 @@
+package Support;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
+/**
+ * 本类用来管理获得数据库中的列名、属性以及在GUI中的名字
+ * 在修改数据库后记得查看本类进行检查。
+ * 注意不能持有外部引用，防止内存泄露。
+ */
+public class DataNameUtils {
+
+    public static String[] customerColumns = new String[]{"id", "姓名", "年龄", "是否会员"};
+    public static String[] carColumns = new String[]{"车牌号", "品牌", "租金", "车况", "押金"};
+    public static String[] stuffColumns = new String[]{"id", "姓名", "年龄"};
+    public static String[] usersColumns = new String[]{"姓名", "密码", "权限等级", "绑定顾客"};
+    public static String[] infoColumns = new String[]{"id", "流水", "车牌", "顾客id", "顾客", "事件", "备注", "时间", "经手员工id", "经手员工"};
+
+    public static HashMap<String, String> primaryKeyMap = new HashMap<String, String>() {{
+        put("users", "name");
+        put("car", "license");
+    }};
+
+    public static String[] getColumnNamesByMode(String mode) {
+        String[] columnNames = new String[0];
+        if (mode.equals("用户")) {
+            columnNames = DataNameUtils.usersColumns;
+        } else if (mode.equals("顾客")) {
+            columnNames = DataNameUtils.customerColumns;
+        } else if (mode.equals("员工")) {
+            columnNames = DataNameUtils.stuffColumns;
+        } else if (mode.equals("车辆")) {
+            columnNames = DataNameUtils.carColumns;
+        } else if (mode.equals("事件")) {
+            columnNames = DataNameUtils.infoColumns;//这里应该用更好的办法
+        }
+        return columnNames;
+    }
+
+    private static HashMap<String, String> name2nameMap = new HashMap<String, String>() {{
+        put("姓名", "name");
+        put("品牌", "brand");
+        put("车牌号", "license");
+        put("租金", "cost");
+        put("车况", "status");
+        put("年龄", "age");
+        put("是否会员", "member");
+        put("密码", "password");
+        put("权限等级", "author");
+        put("押金", "pledge");
+        put("绑定顾客", "customerid");
+        put("顾客id", "customerid");
+        put("经手员工id", "stuffid");
+        put("事件", "event");
+        put("流水", "moychange");
+        put("备注", "detailevent");
+        put("时间", "time");
+    }};
+
+    @Nullable
+    public static String name2name(String strIn) {
+        return name2nameMap.get(strIn);
+    }
+
+    public static ArrayList<String> eventName = new ArrayList<>(Arrays.asList("损坏维修", "罚款", "借车", "还车"));
+
+    public static String swtichEventId(String strIn) {
+        return String.valueOf(eventName.indexOf(strIn));
+    }
+
+    private static HashMap<String, String> tableMode2NameMap = new HashMap<String, String>() {{
+        put("车辆", "car");
+        put("顾客", "customer");
+        put("信息", "info");
+        put("员工", "stuff");
+        put("用户", "users");
+    }};
+
+    public static String tableMode2Name(String tableMode) {
+        return tableMode2NameMap.get(tableMode);
+    }
+
+    /**
+     * 好像本来是int的插入字符串，sql也会自动解析成int……(；´д｀)ゞ
+     *
+     * @param strIn
+     * @return
+     */
+//    public static boolean isIntColumn(String strIn) {
+//        if (strIn.equals("姓名")) {
+//            return false;
+//        } else if (strIn.equals("品牌")) {
+//            return false;
+//        } else if (strIn.equals("车牌号")) {
+//            return false;
+//        } else if (strIn.equals("租金")) {
+//            return true;
+//        } else if (strIn.equals("车况")) {
+//            return true;
+//        } else if (strIn.equals("年龄")) {
+//            return true;
+//        } else if (strIn.equals("是否会员")) {
+//            return false;
+//        } else if (strIn.equals("密码")) {
+//            return false;
+//        } else if (strIn.equals("权限等级")) {
+//            return true;
+//        } else if (strIn.equals("押金")) {
+//            return false;
+//        }
+//        return false;
+//    }
+}
