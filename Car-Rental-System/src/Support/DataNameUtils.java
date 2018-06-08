@@ -22,6 +22,7 @@ public class DataNameUtils {
     public static HashMap<String, String> primaryKeyMap = new HashMap<String, String>() {{
         put("users", "name");
         put("car", "license");
+        put("info", "infoid");
     }};
 
     public static String[] getColumnNamesByMode(String mode) {
@@ -74,7 +75,7 @@ public class DataNameUtils {
     private static HashMap<String, String> tableMode2NameMap = new HashMap<String, String>() {{
         put("车辆", "car");
         put("顾客", "customer");
-        put("信息", "info");
+        put("事件", "info");
         put("员工", "stuff");
         put("用户", "users");
     }};

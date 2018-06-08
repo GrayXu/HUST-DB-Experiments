@@ -17,5 +17,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="beautyeye_lnf" level="project" />
   </component>
 </module>

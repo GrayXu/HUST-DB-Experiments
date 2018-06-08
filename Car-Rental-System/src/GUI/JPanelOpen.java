@@ -20,3 +20,11 @@ class JTextFiledOpen extends JTextField{
         this.setOpaque(false);
     }
 }
+
+class JLabelOpen extends JLabel{
+    public JLabelOpen(){
+
+        this.setBackground(null);
+        this.setOpaque(false);
+    }
+}

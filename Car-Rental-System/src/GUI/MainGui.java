@@ -2,6 +2,8 @@ package GUI;
 
 import IO.DataBase;
 import Support.DataNameUtils;
+import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+import org.jb2011.lnf.beautyeye.ch3_button.BEButtonUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,10 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class MainGui {
@@ -38,12 +37,64 @@ public class MainGui {
     private int delete_row_id = -1;
 
     public static void main(String[] args) {
+
+        try {
+            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.translucencyAppleLike;
+            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        UIManager.put("RootPane.setupButtonVisible", false);
+        setFontForBeautyEye();
+
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         SCREEN_WIDTH = dim.width;
         SCREEN_HEIGHT = dim.height;
 
         JFrame getFrame = new MainGui().initDialog();
 
+    }
+
+    private static void setFontForBeautyEye() {
+        String[] DEFAULT_FONT = new String[]{
+                "Table.font"
+                , "TableHeader.font"
+                , "CheckBox.font"
+                , "Tree.font"
+                , "Viewport.font"
+                , "ProgressBar.font"
+                , "RadioButtonMenuItem.font"
+                , "ToolBar.font"
+                , "ColorChooser.font"
+                , "ToggleButton.font"
+                , "Panel.font"
+                , "TextArea.font"
+                , "Menu.font"
+                , "TableHeader.font"
+                , "OptionPane.font"
+                , "MenuBar.font"
+                , "Button.font"
+                , "Label.font"
+                , "PasswordField.font"
+                , "ScrollPane.font"
+                , "MenuItem.font"
+                , "ToolTip.font"
+                , "List.font"
+                , "EditorPane.font"
+                , "Table.font"
+                , "TabbedPane.font"
+                , "RadioButton.font"
+                , "CheckBoxMenuItem.font"
+                , "TextPane.font"
+                , "PopupMenu.font"
+                , "TitledBorder.font"
+                , "ComboBox.font"
+        };
+
+        for (int i = 0; i < DEFAULT_FONT.length; i++) {
+            UIManager.put(DEFAULT_FONT[i], new Font("微软雅黑", Font.PLAIN, 12));
+        }
     }
 
     public JFrame initDialog() {
@@ -68,7 +119,7 @@ public class MainGui {
             labelPsw.setForeground(Color.white);
             labelName.setForeground(Color.white);
 
-            textDialogName = new JTextField(10);
+            textDialogName = new JTextField(17);
             textDialogPsw = new JPasswordField(10);
             JButton butLogin = new JButton("登录");
 
@@ -85,8 +136,8 @@ public class MainGui {
             dialogLogin.getContentPane().add(pswPanel, BorderLayout.CENTER);
             dialogLogin.getContentPane().add(butLogin, BorderLayout.SOUTH);
             butLogin.addActionListener(otherListener);
-            dialogLogin.setSize(new Dimension(200, 150));
-
+            dialogLogin.setSize(new Dimension(270, 200));
+            dialogLogin.setResizable(false);
             setCenter(dialogLogin);
             return frame;
 
@@ -137,7 +188,7 @@ public class MainGui {
      */
     public void initMainFrame() {
         try {
-            jMainPanel = new BackgrouPanel("res/mainBack.jpg");
+            jMainPanel = new BackgrouPanel("res/mainBack2.jpg");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -154,6 +205,7 @@ public class MainGui {
         JTextFiledOpen field = new JTextFiledOpen();
         field.setFont(new Font("宋体", Font.BOLD, 30));
         field.setText("汽车租借信息系统 数据库实验 2018春季");
+        field.setHorizontalAlignment(JTextField.CENTER);
         field.setBorder(null);
         field.setEditable(false);
 
@@ -235,8 +287,46 @@ public class MainGui {
         c.setVisible(true);
     }
 
-    public void noticeMsg(String in) {
+    public void noticeMsg(String in) {//make code elegant
         JOptionPane.showMessageDialog(frame, in);
+    }
+
+    /**
+     * initialize search panel
+     * TODO: 搜索框也要做权限设置
+     */
+    private void setSearchPanel(JPanelOpen jPanelSearch) {
+        jPanelSearch.setLayout(new FlowLayout());
+        if (PANEL_MODE.equals("车辆")) {
+            setBlankInSearchPanel(jPanelSearch, DataNameUtils.carColumns);
+        } else if (PANEL_MODE.equals("顾客")) {
+            setBlankInSearchPanel(jPanelSearch, DataNameUtils.customerColumns);
+        }
+        if (PANEL_MODE.equals("用户")) {
+            setBlankInSearchPanel(jPanelSearch, DataNameUtils.usersColumns);
+        }
+        if (PANEL_MODE.equals("事件")) {
+            setBlankInSearchPanel(jPanelSearch, DataNameUtils.infoColumns);
+        }
+        if (PANEL_MODE.equals("员工")) {
+            setBlankInSearchPanel(jPanelSearch, DataNameUtils.stuffColumns);
+        }
+        JButton jButton = new JButton("搜索");
+        jButton.setUI(new BEButtonUI().setNormalColor(BEButtonUI.NormalColor.green));
+        jPanelSearch.add(jButton);
+    }
+
+    private void setBlankInSearchPanel(JPanelOpen jPanelSearch, String names[]) {
+        for (int i = 0; i < names.length; i++) {
+            JPanelOpen jPanelO = new JPanelOpen();
+            JLabelOpen jLO = new JLabelOpen();
+            jLO.setText(names[i]);
+            JTextField jTextField = new JTextField();
+            jTextField.setColumns(11);
+            jPanelO.add(jLO);
+            jPanelO.add(jTextField);
+            jPanelSearch.add(jPanelO);
+        }
     }
 
     /**
@@ -255,7 +345,8 @@ public class MainGui {
             }
         };
 
-//        System.out.println(PANEL_MODE + ":" + authority);
+        JPanelOpen jPanelSearch = new JPanelOpen();
+        setSearchPanel(jPanelSearch);
 
         /**
          * 修改权限的体现
@@ -271,7 +362,7 @@ public class MainGui {
             jTable = new JTable() {
                 @Override
                 public boolean isCellEditable(int row, int column) {
-                    return column != 2 && column != 3 && column != 0;
+                    return column != 2 && column != 3;
                 }
             };
         } else if (PANEL_MODE.equals("事件") && authority != 3) {//修改事件表的时候在顾客和经手员工的地方，只能修改对应id
@@ -298,7 +389,6 @@ public class MainGui {
             };
         }
 
-
         jTable.getTableHeader().setReorderingAllowed(false);
         jTable.setModel(tableModel);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -311,14 +401,16 @@ public class MainGui {
         JScrollPane scrollPane = new JScrollPane(jTable);
         scrollPane.setPreferredSize(new Dimension(1000, 350));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jMainPanel.add(jPanelSearch, BorderLayout.CENTER);
         jMainPanel.add(scrollPane, BorderLayout.SOUTH);
         jMainPanel.updateUI();
     }
 
-    public boolean checkUpdateLegal(String tableMode, String name, String value, String primaryKey) {
+    public boolean checkDataLegal(String name, String value) {
         //check is legal or not
-        if (value.contains("'")) {
-            noticeMsg("新数据中含有非法字段");
+        //TODO: 外键参考部分、捆绑更新(车牌可以自动更新)
+        if (value.contains("'") || value.contains(" ")) {
+            noticeMsg("新数据中含有非法字段(\"'\", \" \")");
             return false;
         }
         if (name.equals("事件")) {
@@ -327,31 +419,50 @@ public class MainGui {
                 return false;//不合法事件代码
             }
         }
-        if (value.equals("时间")) {
+        if (name.equals("时间")) {
             if (value.length() != 8 || Pattern.compile("[^\\d]+").matcher(value).find()) {
                 noticeMsg("时间格式错误");
                 return false;
             }
         }
-        if (value.equals("车牌号")) {
+        if (name.equals("车牌号")) {
             if (value.length() != 7) {
                 noticeMsg("车牌号格式错误");
                 return false;
             }
         }
-        if (value.equals("车况")) {
+        if (name.equals("车况")) {
+            if (Pattern.compile("[^\\d]+").matcher(value).find()) {//保证全数字，防止后面强转出错
+                noticeMsg("只能输入数字");
+                return false;
+            }
             if (Integer.valueOf(value) < 1 || Integer.valueOf(value) > 5) {
                 noticeMsg("只能输入1-5的数字");
                 return false;
             }
         }
-        if (value.equals("是否会员")) {
+        if (name.equals("是否会员")) {
             if (!value.equals("Y") && !value.equals("N")) {
                 noticeMsg("只能输入Y或N");
                 return false;
             }
         }
-        //TODO: 外键参考部分、捆绑更新
+        if (name.equals("权限等级")) {
+            if (Pattern.compile("[^\\d]+").matcher(value).find()) {//保证全数字，防止后面强转出错
+                noticeMsg("只能输入数字");
+                return false;
+            }
+            int valueInt = Integer.valueOf(value);
+            if (valueInt < 1 || valueInt > 3) {
+                noticeMsg("只能输入1-3的数字");
+                return false;
+            }
+            if (valueInt != 3 && authority != 1) {
+                noticeMsg("非法提升权限");
+                return false;
+            }
+        }
+
 
         return true;
     }
@@ -441,6 +552,7 @@ public class MainGui {
     JPopupMenu jPopupMenu;
 
     private void createPopupMenu() {
+        if (authority == 3) return;
         jPopupMenu = new JPopupMenu();
 
         JMenuItem delMenuItem = new JMenuItem();
@@ -494,19 +606,35 @@ public class MainGui {
         jButton.addActionListener(e -> {
             //set this hashmap
             HashMap<String, String> map = getDataMap();
-            try {
-                DataBase.getInstance().addRow(PANEL_MODE, map);
-                tableModel.addRow(map2vector(map));
-                dialogAddRow.dispose();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                noticeMsg("添加数据失败");
+            if (checkNewData(map)) {
+                try {
+                    DataBase.getInstance().addRow(PANEL_MODE, map);
+                    tableModel.addRow(map2vector(map));
+                    dialogAddRow.dispose();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                    noticeMsg("新数据不合法或数据库发生错误");
+                }
             }
         });
         contentPanel.add(jButton);
         dialogAddRow.setContentPane(contentPanel);
         dialogAddRow.pack();
         setCenter(dialogAddRow);
+    }
+
+    private boolean checkNewData(HashMap<String, String> map) {
+        Set<String> set = map.keySet();
+        Iterator<String> i = set.iterator();
+        while (i.hasNext()){
+            String key = i.next();
+            String value = map.get(key);
+            if (value == null) continue;
+            if (!checkDataLegal(key,value)){//一个个检查
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -516,7 +644,8 @@ public class MainGui {
 
         String[] columnNames = DataNameUtils.getColumnNamesByMode(PANEL_MODE);
         try {
-            if (checkUpdateLegal(PANEL_MODE, columnNames[column], aValue.toString(), (String) jTable.getValueAt(row, 0))) {
+//            if (checkDataLegal(columnNames[column], aValue.toString(), (String) jTable.getValueAt(row, 0))) {
+            if (checkDataLegal(columnNames[column], aValue.toString())) {
                 DataBase.getInstance().updateData(PANEL_MODE, columnNames[column], aValue.toString(), (String) jTable.getValueAt(row, 0));
                 return true;
             } else {
@@ -524,6 +653,7 @@ public class MainGui {
             }
 
         } catch (SQLException e) {
+            noticeMsg("新数据格式不合法");
             e.printStackTrace();
             return false;
         }

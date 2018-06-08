@@ -1,6 +1,5 @@
 package IO;
 
-import GUI.MainGui;
 import Support.DataNameUtils;
 
 import java.sql.*;
@@ -56,7 +55,7 @@ public class DataBase {
      */
     public int checkUser(String name, String psw) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM users");//全表搜索
         while (resultSet.next()) {
             if (resultSet.getString("name").equals(name)) {
                 if (resultSet.getString("password").equals(psw)) {
@@ -119,15 +118,25 @@ public class DataBase {
         return lists2vectors(lists);
     }
 
+
+
+    /**
+     * 权限3用户只能查看自己的用户信息，和修改用户名和密码
+     *
+     * @param authority
+     * @param userName
+     * @return
+     * @throws SQLException
+     */
     public Vector<Vector<String>> getUserLists(int authority, String userName) throws SQLException {
         Statement statement = connection.createStatement();
         String sql = null;
-        if (authority == 1){
+        if (authority == 1) {
             sql = "SELECT * FROM users";
-        }else if (authority == 2){
+        } else if (authority == 2) {
             sql = "SELECT * FROM users WHERE author <> 1";
-        }else if (authority == 3){
-            sql = "SELECT * FROM users WHERE name = '"+userName+"'";
+        } else if (authority == 3) {
+            sql = "SELECT * FROM users WHERE name = '" + userName + "'";
         }
         ResultSet resultSet = statement.executeQuery(sql);
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
@@ -146,10 +155,10 @@ public class DataBase {
     public Vector<Vector<String>> getInfoLists() throws SQLException {
         Statement statement = connection.createStatement();
         System.out.println("SELECT info.infoid , info.moychange, car.license, customer.name, info.event, info.detailevent, info.time, stuff.name\n" +
-                "FROM info,car,stuff,customer\n"+
+                "FROM info,car,stuff,customer\n" +
                 "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid");
         ResultSet resultSet = statement.executeQuery("SELECT info.infoid , info.moychange, car.license, customer.id,customer.name, info.event, info.detailevent, info.time, stuff.id,stuff.name\n" +
-                "FROM info,car,stuff,customer\n"+
+                "FROM info,car,stuff,customer\n" +
                 "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid");
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
         while (resultSet.next()) {
@@ -220,7 +229,11 @@ public class DataBase {
 
         String sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + " = ? where " + primaryKeyName + " = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, value);
+        if (value.equals("")) {
+            preparedStatement.setNull(1,Types.CHAR);//this types.* is useless...
+        } else {
+            preparedStatement.setString(1, value);
+        }
         preparedStatement.setString(2, primaryKey);
         System.out.println(preparedStatement.toString());
         preparedStatement.execute();
@@ -247,7 +260,7 @@ public class DataBase {
                 String s = iterator.next();
                 System.out.println(s);
                 String value = data.get(s);
-                if (value != null) {
+                if (value != null && !value.equals("")) {
                     if (isFirst) {//第一个不加逗号
                         isFirst = false;
                         columns.append(DataNameUtils.name2name(s));
