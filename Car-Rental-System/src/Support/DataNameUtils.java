@@ -59,6 +59,7 @@ public class DataNameUtils {
         put("流水", "moychange");
         put("备注", "detailevent");
         put("时间", "time");
+        put("id", "id");
     }};
 
     @Nullable
@@ -83,35 +84,4 @@ public class DataNameUtils {
     public static String tableMode2Name(String tableMode) {
         return tableMode2NameMap.get(tableMode);
     }
-
-    /**
-     * 好像本来是int的插入字符串，sql也会自动解析成int……(；´д｀)ゞ
-     *
-     * @param strIn
-     * @return
-     */
-//    public static boolean isIntColumn(String strIn) {
-//        if (strIn.equals("姓名")) {
-//            return false;
-//        } else if (strIn.equals("品牌")) {
-//            return false;
-//        } else if (strIn.equals("车牌号")) {
-//            return false;
-//        } else if (strIn.equals("租金")) {
-//            return true;
-//        } else if (strIn.equals("车况")) {
-//            return true;
-//        } else if (strIn.equals("年龄")) {
-//            return true;
-//        } else if (strIn.equals("是否会员")) {
-//            return false;
-//        } else if (strIn.equals("密码")) {
-//            return false;
-//        } else if (strIn.equals("权限等级")) {
-//            return true;
-//        } else if (strIn.equals("押金")) {
-//            return false;
-//        }
-//        return false;
-//    }
 }

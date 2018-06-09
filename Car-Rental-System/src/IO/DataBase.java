@@ -30,15 +30,13 @@ public class DataBase {
     /**
      * @return status of connection
      */
+
     public boolean initConnect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             return true;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -53,6 +51,7 @@ public class DataBase {
      * @return authority, -1->no found, 1->root user, 2->administrator, 3->normal user
      * @throws SQLException
      */
+
     public int checkUser(String name, String psw) throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM users");//全表搜索
@@ -67,126 +66,212 @@ public class DataBase {
         return -1;
     }
 
+    //从约束里拿where子句
+    private String getWhereClause(HashMap<String, String> map, boolean haveWhere) {
+        StringBuilder sql = new StringBuilder();
+        boolean isFirst = true;
+        if (haveWhere) {
+            isFirst = false;
+        }
+        Set<String> keySet = map.keySet();
+
+        for (String key : keySet) {
+            String value = map.get(key);
+            if (value.equals("")) continue;
+            if (isFirst) {
+                sql.append("WHERE ");
+                isFirst = false;
+            } else {
+                sql.append("and ");
+            }
+
+            sql.append(DataNameUtils.name2name(key) + " = '" + value + "' ");
+        }
+        return String.valueOf(sql);
+    }
+
+    //压一个二维list出来
+    private Vector<Vector<String>> pullVectors(ResultSet resultSet, int length) throws SQLException {
+        Vector<Vector<String>> vectors = new Vector<>();
+        while (resultSet.next()) {
+            Vector<String> tempVec = new Vector<>();
+            for (int i = 1; i <= length; i++) {//从1开始
+                tempVec.add(resultSet.getString(i));
+            }
+            vectors.add(tempVec);
+        }
+        return vectors;
+    }
+
     /**
-     * 以下五个getLists都为从数据库中获得对应的数据
+     * getLists为从数据库中获得对应的数据，只能支持普通查询（车辆，顾客，）
+     * three override methods for each one
      *
      * @return 获得的数据项
      * @throws SQLException 语句错误或者受到约束
      */
+
     public Vector<Vector<String>> getCarLists() throws SQLException {
+        String sql = "SELECT * FROM car ";
+        return getCarLists(sql);
+    }
+
+    public Vector<Vector<String>> getCarLists(HashMap<String, String> map) throws SQLException {
+        String sql = "SELECT * FROM car ";
+        sql = sql + getWhereClause(map, false);
+        return getCarLists(sql);
+    }
+
+    public Vector<Vector<String>> getCarLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM car");
-        ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()) {
-            ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= DataNameUtils.carColumns.length; i++) {//从1开始，很奇怪的设定。。。
-                tempList.add(resultSet.getString(i));
-            }
-            lists.add(tempList);
-        }
+        System.out.println(sql);
+        ResultSet resultSet = statement.executeQuery(sql);
+        Vector<Vector<String>> vectors = pullVectors(resultSet, DataNameUtils.carColumns.length);
         statement.close();
-        return lists2vectors(lists);
+        return vectors;
     }
 
     public Vector<Vector<String>> getCustomerLists() throws SQLException {
+        String sql = "SELECT * FROM customer ";
+        return getCustomerLists(sql);
+    }
+
+    public Vector<Vector<String>> getCustomerLists(HashMap<String, String> map) throws SQLException {
+        String sql = "SELECT * FROM customer ";
+        sql = sql + getWhereClause(map, false);
+        return getCustomerLists(sql);
+    }
+
+    public Vector<Vector<String>> getCustomerLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM customer");
-        ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()) {
-            ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= DataNameUtils.customerColumns.length; i++) {//从1开始，很奇怪的设定。。。
-                tempList.add(resultSet.getString(i));
-            }
-            lists.add(tempList);
-        }
+        System.out.println(sql);
+        ResultSet resultSet = statement.executeQuery(sql);
+        Vector<Vector<String>> vectors = pullVectors(resultSet, DataNameUtils.customerColumns.length);
         statement.close();
-        return lists2vectors(lists);
+        return vectors;
     }
 
     public Vector<Vector<String>> getStuffLists() throws SQLException {
+        String sql = "SELECT * FROM stuff ";
+        return getStuffLists(sql);
+    }
+
+    public Vector<Vector<String>> getStuffLists(HashMap<String, String> map) throws SQLException {
+        String sql = "SELECT * FROM stuff ";
+        sql = sql + getWhereClause(map, false);
+        return getStuffLists(sql);
+    }
+
+    public Vector<Vector<String>> getStuffLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM stuff");
-        ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()) {
-            ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= DataNameUtils.stuffColumns.length; i++) {//从1开始，很奇怪的设定。。。
-                tempList.add(resultSet.getString(i));
-            }
-            lists.add(tempList);
-        }
+        System.out.println(sql);
+        ResultSet resultSet = statement.executeQuery(sql);
+        Vector<Vector<String>> vectors = pullVectors(resultSet, DataNameUtils.stuffColumns.length);
         statement.close();
-        return lists2vectors(lists);
+        return vectors;
     }
 
 
-
-    /**
-     * 权限3用户只能查看自己的用户信息，和修改用户名和密码
-     *
-     * @param authority
-     * @param userName
-     * @return
-     * @throws SQLException
-     */
+    //权限3用户只能查看自己的用户信息，和修改用户名和密码
     public Vector<Vector<String>> getUserLists(int authority, String userName) throws SQLException {
-        Statement statement = connection.createStatement();
         String sql = null;
         if (authority == 1) {
-            sql = "SELECT * FROM users";
+            sql = "SELECT * FROM users ";
         } else if (authority == 2) {
-            sql = "SELECT * FROM users WHERE author <> 1";
+            sql = "SELECT * FROM users WHERE author <> 1 ";
         } else if (authority == 3) {
-            sql = "SELECT * FROM users WHERE name = '" + userName + "'";
+            sql = "SELECT * FROM users WHERE name = '" + userName + "' ";
         }
-        ResultSet resultSet = statement.executeQuery(sql);
-        ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        while (resultSet.next()) {
-            ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= DataNameUtils.usersColumns.length; i++) {//从1开始，很奇怪的设定。。。
-                tempList.add(resultSet.getString(i));
-            }
-            lists.add(tempList);
-        }
-        statement.close();
-        return lists2vectors(lists);
+        return getUserLists(sql);
     }
 
+    public Vector<Vector<String>> getUserLists(HashMap<String, String> map, int authority, String userName) throws SQLException {
+        String sql = null;
+        if (authority == 1) {
+            sql = "SELECT * FROM users ";
+            sql = sql + getWhereClause(map, false);
+        } else if (authority == 2) {
+            sql = sql + getWhereClause(map, true);
+            sql = "SELECT * FROM users WHERE author <> 1 ";
+        } else if (authority == 3) {
+            sql = "SELECT * FROM users WHERE name = '" + userName + "' ";
+            sql = sql + getWhereClause(map, true);
+        }
+        return getUserLists(sql);
+    }
 
-    public Vector<Vector<String>> getInfoLists() throws SQLException {
+    public Vector<Vector<String>> getUserLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
-        System.out.println("SELECT info.infoid , info.moychange, car.license, customer.name, info.event, info.detailevent, info.time, stuff.name\n" +
-                "FROM info,car,stuff,customer\n" +
-                "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid");
-        ResultSet resultSet = statement.executeQuery("SELECT info.infoid , info.moychange, car.license, customer.id,customer.name, info.event, info.detailevent, info.time, stuff.id,stuff.name\n" +
-                "FROM info,car,stuff,customer\n" +
-                "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid");
-        ArrayList<ArrayList<String>> lists = new ArrayList<>();
+        System.out.println(sql);
+        ResultSet resultSet = statement.executeQuery(sql);
+        Vector<Vector<String>> vectors = pullVectors(resultSet, DataNameUtils.usersColumns.length);
+        statement.close();
+        return vectors;
+    }
+
+    public Vector<Vector<String>> getInfoLists(String sql) throws SQLException {
+        Statement statement = connection.createStatement();
+        System.out.println(sql);
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        Vector<Vector<String>> vectors = new Vector<>();
         while (resultSet.next()) {
-            ArrayList<String> tempList = new ArrayList<>();
-            for (int i = 1; i <= DataNameUtils.infoColumns.length; i++) {//从1开始，很奇怪的设定。。。
+            Vector<String> tempVec = new Vector<>();
+            for (int i = 1; i <= DataNameUtils.infoColumns.length; i++) {//从1开始
                 if (i == 6) {
                     switch (resultSet.getInt(i)) {//eventid to event
                         case 1:
-                            tempList.add("损坏维修");
+                            tempVec.add("损坏维修");
                             break;
                         case 2:
-                            tempList.add("罚款");
+                            tempVec.add("罚款");
                             break;
                         case 3:
-                            tempList.add("借车");
+                            tempVec.add("借车");
                             break;
                         case 4:
-                            tempList.add("还车");
+                            tempVec.add("还车");
                             break;
                     }
                 } else {
-                    tempList.add(resultSet.getString(i));
+                    tempVec.add(resultSet.getString(i));
                 }
             }
-            lists.add(tempList);
+            vectors.add(tempVec);
+        }
+
+        statement.close();
+        return vectors;
+    }
+
+    public Vector<Vector<String>> getInfoLists(HashMap<String, String> map, int authority, String userName) throws SQLException {
+        String sql = "SELECT info.infoid , info.moychange, car.license, customer.id,customer.name, info.event, info.detailevent, info.time, stuff.id,stuff.name\n" +
+                "FROM info,car,stuff,customer\n" +
+                "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid ";
+        sql = sql + getWhereClause(map, true);
+        return getInfoLists(sql);
+    }
+
+    public Vector<Vector<String>> getInfoLists(int authority, String userName) throws SQLException {
+        String sql = "SELECT info.infoid , info.moychange, car.license, customer.id,customer.name, info.event, info.detailevent, info.time, stuff.id,stuff.name\n" +
+                "FROM info,car,stuff,customer\n" +
+                "WHERE info.license = car.license AND info.stuffid = stuff.id AND customer.id = info.customerid ";
+        if (authority == 3) {
+            sql = sql + "AND customer.id = " + getIDbyUserName(userName) + " ";
+        }
+        return getInfoLists(sql);
+    }
+
+    public String getIDbyUserName(String name) throws SQLException {
+        String sql = "SELECT customerid FROM users WHERE NAME = '" + name + "'";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        Vector<String> vector = new Vector<>();
+        while (resultSet.next()) {
+            vector.add(resultSet.getString(1));
         }
         statement.close();
-        return lists2vectors(lists);
+        return vector.get(0);
     }
 
     /**
@@ -196,6 +281,7 @@ public class DataBase {
      * @param primaryKey 主键的值
      * @throws SQLException 语句错误或者受到约束
      */
+
     public void deleteRow(String tableMode, String primaryKey) throws SQLException {
         String tableName = DataNameUtils.tableMode2Name(tableMode);
 
@@ -218,6 +304,7 @@ public class DataBase {
      * @throws SQLException 语句错误或者受到约束
      */
 
+
     public void updateData(String tableMode, String name, String value, String primaryKey) throws SQLException {
         String tableName = DataNameUtils.tableMode2Name(tableMode);
 
@@ -230,7 +317,7 @@ public class DataBase {
         String sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + " = ? where " + primaryKeyName + " = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         if (value.equals("")) {
-            preparedStatement.setNull(1,Types.CHAR);//this types.* is useless...
+            preparedStatement.setNull(1, Types.CHAR);//this types.* is useless...
         } else {
             preparedStatement.setString(1, value);
         }
@@ -246,6 +333,7 @@ public class DataBase {
      * @param data      一张哈希表存新数据
      * @throws SQLException 语句错误或者受到约束
      */
+
     public void addRow(String tableMode, HashMap<String, String> data) throws SQLException {
         Statement statement = connection.createStatement();
         String tableName = DataNameUtils.tableMode2Name(tableMode);
@@ -279,18 +367,48 @@ public class DataBase {
     }
 
     /**
-     * 二维ArrayList转换为二维Vector
+     * 获得所有图表数据
+     * 1->year 2->month 3->day
+     * func:借车 还车 损坏维修 罚款 流水
      *
-     * @param lists 待转换的二维list
-     * @return 二维Vector
+     * @return
+     * @throws SQLException
      */
-    private Vector<Vector<String>> lists2vectors(ArrayList<ArrayList<String>> lists) {
-        Vector<Vector<String>> vectors = new Vector<>();
+    public ArrayList<ArrayList<String>> getAllChartData(String mode, String func) throws SQLException {
 
-        for (ArrayList<String> list : lists) {
-            vectors.add(new Vector<>(list));
+        String selectItem;
+        String whereClause = "";
+        if (func.equals("流水")) {
+            selectItem = "SUM(moychange)";
+        } else {
+            selectItem = "COUNT(TIME)";//计算次数
+            int indexid = DataNameUtils.eventName.indexOf(func);
+            whereClause = " WHERE event = " + String.valueOf(indexid);
         }
-        return vectors;
+
+        String sql = null;
+        if (mode.equals("年")){
+            sql = "SELECT YEAR(TIME), " + selectItem + " FROM info " + whereClause + " GROUP BY YEAR(TIME)";
+        }else if (mode.equals("月")){
+            sql = "SELECT YEAR(TIME),MONTH(TIME), " + selectItem + " FROM info " + whereClause + " GROUP BY YEAR(TIME),MONTH(TIME)";
+        }else if (mode.equals("日")){
+            sql = "SELECT TIME, " + selectItem + " FROM info " + whereClause + " GROUP BY TIME";
+        }
+
+        System.out.println(sql);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        ArrayList<ArrayList<String>> lists = new ArrayList<>();
+        while (resultSet.next()) {
+            ArrayList<String> listTemp = new ArrayList<>();
+            listTemp.add(resultSet.getString(1));
+            listTemp.add(resultSet.getString(2));
+            if (mode.equals("月")) listTemp.add(resultSet.getString(3));
+            lists.add(listTemp);
+        }
+        statement.close();
+        return lists;
     }
 
 }

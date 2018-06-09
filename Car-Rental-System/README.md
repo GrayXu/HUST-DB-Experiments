@@ -9,8 +9,9 @@
  - 能够生成租借公司的日、月、季度、年财务报表。
 
  ## Dependence
- - 界面基于Swing组件动态添加
- - MySQL作为数据库后台
+ - 界面主体为Swing，由BeautyEye进行优化识图。
+ - MySQL作为数据库后台。
+ - JFreeChart绘制统计图。
 
  ## Note
  - 约束尽量在Java层实现。
