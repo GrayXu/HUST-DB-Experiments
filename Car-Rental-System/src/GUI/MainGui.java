@@ -20,10 +20,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Pattern;
+
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class MainGui {
 
@@ -127,7 +129,7 @@ public class MainGui {
             }
             dialogLogin.setTitle("汽车租借信息系统");
 
-            dialogLogin.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialogLogin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 
             JLabel labelName = new JLabel("用户名:");
@@ -253,7 +255,7 @@ public class MainGui {
         for (JMenuItem i :
                 itemsOp) {
             menuOp.add(i);
-            i.addActionListener(otherListener);
+            i.addActionListener(fileListener);
         }
 
         JMenu menuReport = new JMenu("报表");
@@ -287,6 +289,52 @@ public class MainGui {
 
     }
 
+    /**
+     * 文件选择框
+     */
+    ActionListener fileListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String command = e.getActionCommand();
+            JFileChooser jFileChooser = new JFileChooser();
+            File file;
+            String path = null;
+            if (command.equals("导入")) {
+                jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                jFileChooser.showOpenDialog(frame);
+                file = jFileChooser.getSelectedFile();
+                if (file.isFile()) {
+                    path = file.getAbsolutePath();
+                }
+            } else {
+                jFileChooser.showSaveDialog(frame);
+                file = jFileChooser.getSelectedFile();
+                path = jFileChooser.getCurrentDirectory() + "\\" + jFileChooser.getName(file);
+            }
+
+            try {
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("backup.bat"));
+                String bat;
+                if (command.equals("导出")) {
+                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysqldump.exe lab3 -uroot -p > " + path + " -pXIANG1569348";
+                    System.out.println(bat);
+                }else{
+                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysql.exe -uroot -pXIANG1569348 lab3 < "+path;
+                }
+                bufferedWriter.write(bat);
+                bufferedWriter.close();
+                Process process = Runtime.getRuntime().exec("backup.bat");//save
+                process.waitFor();
+
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+
+
+        }
+    };
 
     /**
      * 展示图表
@@ -336,7 +384,7 @@ public class MainGui {
         contChartPane.add(chartPanel, BorderLayout.SOUTH);
 
         chartDialog.setSize(new Dimension(600, 500));
-        chartDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        chartDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setCenter(chartDialog);
     }
 
@@ -373,14 +421,14 @@ public class MainGui {
             ArrayList<ArrayList<String>> dataLists = DataBase.getInstance().getAllChartData(mode, func);
             for (ArrayList<String> list : dataLists) {
                 int length = list.size();
-                double value = Double.parseDouble(list.get(length-1));
+                double value = Double.parseDouble(list.get(length - 1));
                 String colunmKey;
-                if (length==3){
-                    colunmKey = list.get(0)+list.get(1);
-                }else{
+                if (length == 3) {
+                    colunmKey = list.get(0) + list.get(1);
+                } else {
                     colunmKey = list.get(0);
                 }
-                dataset.addValue(value,"gray",colunmKey);
+                dataset.addValue(value, "gray", colunmKey);
             }
 
         } catch (SQLException e) {
@@ -746,7 +794,7 @@ public class MainGui {
         dialogAddRow.setTitle("添加");
         dialogAddRow.setLayout(new FlowLayout());
         JPanel contentPanel = new JPanel();
-        dialogAddRow.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialogAddRow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         String[] columnNames = DataNameUtils.getColumnNamesByMode(PANEL_MODE);
         for (String s : columnNames) {

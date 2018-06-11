@@ -31,8 +31,8 @@
       <file leaf-file-name="MainGui.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="267" column="48" lean-forward="true" selection-start-line="267" selection-start-column="48" selection-end-line="267" selection-end-column="48" />
+            <state relative-caret-position="428">
+              <caret line="327" column="0" lean-forward="true" selection-start-line="327" selection-start-column="0" selection-end-line="327" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#setFontForBeautyEye#0;class#MainGui#0" expanded="false" />
@@ -42,22 +42,12 @@
                 <element signature="method#getChartData#0;class#MainGui#0" expanded="false" />
                 <element signature="method#setSearchPanel#0;class#MainGui#0" expanded="false" />
                 <element signature="method#setBlankInSearchPanel#0;class#MainGui#0" expanded="false" />
-                <element signature="initializer##0;class#16501:16757" expanded="false" />
+                <element signature="initializer##0;class#18388:18644" expanded="false" />
                 <element signature="method#getComboBox#0;class#MainGui#0" expanded="false" />
                 <element signature="method#setTablePanel#0;class#MainGui#0" expanded="false" />
-                <element signature="e#17940#18115#0" expanded="true" />
-                <element signature="e#18114#18115#0" expanded="true" />
-                <element signature="e#18222#18418#0" expanded="true" />
-                <element signature="e#18417#18418#0" expanded="true" />
-                <element signature="e#18828#19009#0" expanded="true" />
-                <element signature="e#19008#19009#0" expanded="true" />
-                <element signature="e#19050#19224#0" expanded="true" />
-                <element signature="e#19223#19224#0" expanded="true" />
-                <element signature="e#19367#19551#0" expanded="true" />
-                <element signature="e#19550#19551#0" expanded="true" />
                 <element signature="method#checkDataLegal#0;class#MainGui#0" expanded="false" />
                 <element signature="method#mouseRightButtonClick#0;class#MainGui#0" expanded="false" />
-                <element signature="e#22620#24605#0" expanded="false" />
+                <element signature="e#24507#26492#0" expanded="false" />
                 <element signature="method#createPopupMenu#0;class#MainGui#0" expanded="false" />
                 <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
                 <element signature="method#checkNewData#0;class#MainGui#0" expanded="false" />
@@ -73,7 +63,7 @@
       <file leaf-file-name="DataNameUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Support/DataNameUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
+            <state relative-caret-position="1449">
               <caret line="69" column="84" lean-forward="false" selection-start-line="69" selection-start-column="84" selection-end-line="69" selection-end-column="84" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -87,7 +77,7 @@
       <file leaf-file-name="DataBase.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
+            <state relative-caret-position="3726">
               <caret line="384" column="44" lean-forward="false" selection-start-line="384" selection-start-column="44" selection-end-line="384" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -218,8 +208,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="897" />
-    <option name="y" value="-8" />
+    <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -238,7 +227,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -290,9 +281,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -500,14 +489,16 @@
       <workItem from="1528376302689" duration="26411000" />
       <workItem from="1528526938912" duration="3351000" />
       <workItem from="1528533084619" duration="24942000" />
+      <workItem from="1528721647133" duration="7824000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237270000" />
+    <option name="totallyTimeSpent" value="245094000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -518,14 +509,12 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2078473" sideWeight="0.50417536" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24284199" sideWeight="0.49582464" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32864583" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24284199" sideWeight="0.49582464" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1640625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32767764" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -537,6 +526,8 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32864583" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32767764" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -558,46 +549,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#DataBase#0;class#DataBase#0" expanded="false" />
-            <element signature="method#initConnect#0;class#DataBase#0" expanded="false" />
-            <element signature="method#checkUser#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getWhereClause#0;class#DataBase#0" expanded="false" />
-            <element signature="method#pullVectors#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#1;class#DataBase#0" expanded="false" />
-            <element signature="method#getCarLists#2;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#1;class#DataBase#0" expanded="false" />
-            <element signature="method#getCustomerLists#2;class#DataBase#0" expanded="false" />
-            <element signature="method#getStuffLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getStuffLists#2;class#DataBase#0" expanded="false" />
-            <element signature="method#getUserLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getUserLists#1;class#DataBase#0" expanded="false" />
-            <element signature="method#getUserLists#2;class#DataBase#0" expanded="false" />
-            <element signature="method#getInfoLists#0;class#DataBase#0" expanded="false" />
-            <element signature="method#getInfoLists#1;class#DataBase#0" expanded="false" />
-            <element signature="method#deleteRow#0;class#DataBase#0" expanded="false" />
-            <element signature="method#updateData#0;class#DataBase#0" expanded="false" />
-            <element signature="method#addRow#0;class#DataBase#0" expanded="false" />
-            <marker date="1528561161970" expanded="true" signature="1419:1438" ph="SELECT * FRO... users" />
-            <marker date="1528561161970" expanded="true" signature="3381:3398" ph="SELECT * FRO... car" />
-            <marker date="1528561161970" expanded="true" signature="9486:9542" ph="SELECT custo... users" />
-            <marker date="1528561161970" expanded="true" signature="10328:10390" ph="DELETE FROM " />
-            <marker date="1528561161970" expanded="true" signature="11210:11313" ph="UPDATE missi... " />
-            <marker date="1528561161970" expanded="true" signature="13091:13184" ph="INSERT INTO missingValue... " />
-            <marker date="1528561161970" expanded="true" signature="13978:14065" ph="SELECT YEAR(... " />
-            <marker date="1528561161970" expanded="true" signature="14124:14235" ph="SELECT YEAR(... " />
-            <marker date="1528561161970" expanded="true" signature="14294:14369" ph="SELECT TIME,... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/loginPane.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
@@ -737,7 +688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1701">
           <caret line="128" column="71" lean-forward="true" selection-start-line="128" selection-start-column="71" selection-end-line="128" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -783,7 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -795,22 +744,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/IO/getCarLists.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="5" column="30" lean-forward="true" selection-start-line="5" selection-start-column="30" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IO/DataBaseIF.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="39" lean-forward="false" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/IO/getCarLists.java" />
+    <entry file="file://$PROJECT_DIR$/src/IO/DataBaseIF.java" />
     <entry file="file://$PROJECT_DIR$/src/GUI/JPanelOpen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -823,7 +758,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="3726">
           <caret line="384" column="44" lean-forward="false" selection-start-line="384" selection-start-column="44" selection-end-line="384" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -863,7 +798,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Support/DataNameUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
+        <state relative-caret-position="1449">
           <caret line="69" column="84" lean-forward="false" selection-start-line="69" selection-start-column="84" selection-end-line="69" selection-end-column="84" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -873,10 +808,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/WindowConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="69" column="28" lean-forward="false" selection-start-line="69" selection-start-column="28" selection-end-line="69" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="267" column="48" lean-forward="true" selection-start-line="267" selection-start-column="48" selection-end-line="267" selection-end-column="48" />
+        <state relative-caret-position="428">
+          <caret line="327" column="0" lean-forward="true" selection-start-line="327" selection-start-column="0" selection-end-line="327" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#setFontForBeautyEye#0;class#MainGui#0" expanded="false" />
@@ -886,22 +829,12 @@
             <element signature="method#getChartData#0;class#MainGui#0" expanded="false" />
             <element signature="method#setSearchPanel#0;class#MainGui#0" expanded="false" />
             <element signature="method#setBlankInSearchPanel#0;class#MainGui#0" expanded="false" />
-            <element signature="initializer##0;class#16501:16757" expanded="false" />
+            <element signature="initializer##0;class#18388:18644" expanded="false" />
             <element signature="method#getComboBox#0;class#MainGui#0" expanded="false" />
             <element signature="method#setTablePanel#0;class#MainGui#0" expanded="false" />
-            <element signature="e#17940#18115#0" expanded="true" />
-            <element signature="e#18114#18115#0" expanded="true" />
-            <element signature="e#18222#18418#0" expanded="true" />
-            <element signature="e#18417#18418#0" expanded="true" />
-            <element signature="e#18828#19009#0" expanded="true" />
-            <element signature="e#19008#19009#0" expanded="true" />
-            <element signature="e#19050#19224#0" expanded="true" />
-            <element signature="e#19223#19224#0" expanded="true" />
-            <element signature="e#19367#19551#0" expanded="true" />
-            <element signature="e#19550#19551#0" expanded="true" />
             <element signature="method#checkDataLegal#0;class#MainGui#0" expanded="false" />
             <element signature="method#mouseRightButtonClick#0;class#MainGui#0" expanded="false" />
-            <element signature="e#22620#24605#0" expanded="false" />
+            <element signature="e#24507#26492#0" expanded="false" />
             <element signature="method#createPopupMenu#0;class#MainGui#0" expanded="false" />
             <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
             <element signature="method#checkNewData#0;class#MainGui#0" expanded="false" />
