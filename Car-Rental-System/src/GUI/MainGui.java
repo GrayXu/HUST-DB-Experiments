@@ -317,10 +317,10 @@ public class MainGui {
                 String bat;
                 if (command.equals("导出")) {
                     bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysqldump.exe lab3 -uroot -p > " + path + " -pXIANG1569348";
-                    System.out.println(bat);
-                }else{
-                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysql.exe -uroot -pXIANG1569348 lab3 < "+path;
+                } else {
+                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysql.exe -uroot -pXIANG1569348 lab3 < " + path;
                 }
+                System.out.println(bat);
                 bufferedWriter.write(bat);
                 bufferedWriter.close();
                 Process process = Runtime.getRuntime().exec("backup.bat");//save
@@ -534,7 +534,7 @@ public class MainGui {
         put("车况", new String[]{"", "1", "2", "3", "4", "5"});
         put("是否会员", new String[]{"", "Y", "N"});
         put("权限等级", new String[]{"", "1", "2", "3"});
-        put("权限等级", new String[]{"", "1", "2", "3"});
+        put("事件", new String[]{"","损坏维修", "罚款", "借车", "还车"});
     }};
 
     private JComboBox<String> getComboBox(String name) {

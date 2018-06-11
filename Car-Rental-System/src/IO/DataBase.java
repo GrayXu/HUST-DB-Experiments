@@ -85,6 +85,7 @@ public class DataBase {
                 sql.append("and ");
             }
 
+            if (DataNameUtils.name2name(key).equals("event")) value = String.valueOf(DataNameUtils.eventName.indexOf(value)+1);
             sql.append(DataNameUtils.name2name(key) + " = '" + value + "' ");
         }
         return String.valueOf(sql);
@@ -382,7 +383,7 @@ public class DataBase {
             selectItem = "SUM(moychange)";
         } else {
             selectItem = "COUNT(TIME)";//计算次数
-            int indexid = DataNameUtils.eventName.indexOf(func);
+            int indexid = DataNameUtils.eventName.indexOf(func)+1;
             whereClause = " WHERE event = " + String.valueOf(indexid);
         }
 
