@@ -17,7 +17,7 @@ public class DataNameUtils {
     public static String[] carColumns = new String[]{"车牌号", "品牌", "租金", "车况", "押金"};
     public static String[] stuffColumns = new String[]{"id", "姓名", "年龄"};
     public static String[] usersColumns = new String[]{"姓名", "密码", "权限等级", "绑定顾客"};
-    public static String[] infoColumns = new String[]{"id", "流水", "车牌", "顾客id", "顾客", "事件", "备注", "时间", "经手员工id", "经手员工"};
+    public static String[] infoColumns = new String[]{"id", "流水", "车牌号", "顾客id", "顾客", "事件", "备注", "时间", "经手员工id", "经手员工"};
 
     public static HashMap<String, String> primaryKeyMap = new HashMap<String, String>() {{
         put("users", "name");

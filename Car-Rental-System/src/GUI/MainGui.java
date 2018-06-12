@@ -251,7 +251,7 @@ public class MainGui {
         JMenu menuOp = new JMenu("文件");
         ArrayList<JMenuItem> itemsOp = new ArrayList<>();
         itemsOp.add(new JMenuItem("导出"));
-        itemsOp.add(new JMenuItem("导入"));
+//        itemsOp.add(new JMenuItem("导入"));
         for (JMenuItem i :
                 itemsOp) {
             menuOp.add(i);
@@ -313,18 +313,26 @@ public class MainGui {
             }
 
             try {
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("backup.bat"));
+                BufferedWriter bufferedWriter;
                 String bat;
                 if (command.equals("导出")) {
-                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysqldump.exe lab3 -uroot -p > " + path + " -pXIANG1569348";
+                    bat = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe lab3 -uroot " + " -pXIANG1569348 -r" + path +" --skip-lock-tables";
                 } else {
-                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysql.exe -uroot -pXIANG1569348 lab3 < " + path;
+//                    bufferedWriter = new BufferedWriter(new FileWriter("load.bat"));
+//                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysql.exe -uroot -pXIANG1569348 lab3 < " + path;
+                    bat = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe lab3 -uroot -pXIANG1569348 -e source " + path;
                 }
                 System.out.println(bat);
-                bufferedWriter.write(bat);
-                bufferedWriter.close();
-                Process process = Runtime.getRuntime().exec("backup.bat");//save
-                process.waitFor();
+//                bufferedWriter.write(bat);
+//                bufferedWriter.close();
+                Process process = Runtime.getRuntime().exec(bat);//save
+                int com = process.waitFor();
+                if (com == 0){
+//                    System.out.println("成功");
+                    noticeMsg("操作成功");
+                }else{
+                    noticeMsg("操作失败");
+                }
 
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -797,13 +805,20 @@ public class MainGui {
         dialogAddRow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         String[] columnNames = DataNameUtils.getColumnNamesByMode(PANEL_MODE);
+
+        Set<String> comboxSet = comboxMap.keySet();
+
         for (String s : columnNames) {
-            if (!s.equals("id")) {
+            if (!s.equals("id") && !s.equals("顾客") && !s.equals("经手员工")) {
                 JPanel jPanel = new JPanel();
                 JLabel jLabel = new JLabel(s);
-                JTextField jTextField = new JTextField(10);
                 jPanel.add(jLabel, BorderLayout.WEST);
-                jPanel.add(jTextField, BorderLayout.EAST);
+                if (comboxSet.contains(s)){
+                    jPanel.add(getComboBox(s), BorderLayout.EAST);
+                }else{
+                    JTextField jTextField = new JTextField(10);
+                    jPanel.add(jTextField, BorderLayout.EAST);
+                }
                 contentPanel.add(jPanel);
             }
         }
@@ -894,6 +909,10 @@ public class MainGui {
         for (int i = 0; i < components.length - 1; i++) {//不算button
             JPanel jPanelGet = (JPanel) components[i];
             String key = ((JLabel) jPanelGet.getComponents()[0]).getText();
+            if(key.equals("顾客") || key.equals("经手员工")){
+                continue;
+            }
+
             String value = null;
             try {
                 value = ((JTextField) jPanelGet.getComponents()[1]).getText();

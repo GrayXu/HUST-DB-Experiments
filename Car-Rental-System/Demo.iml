@@ -17,7 +17,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="beautyeye_lnf" level="project" />
-    <orderEntry type="library" name="JFreeChart" level="project" />
+    <orderEntry type="library" name="db" level="project" />
   </component>
 </module>

@@ -296,3 +296,5 @@ DELIMITER ;#not work
 CREATE USER gray@localhost IDENTIFIED BY '1569348'
 GRANT ALL ON lab2.* TO gray@localhost;
 SELECT HOST,USER,authentication_string FROM mysql.user
+
+source C:\Users\Dell\Desktop\1.sql

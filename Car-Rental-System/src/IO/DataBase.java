@@ -349,14 +349,15 @@ public class DataBase {
                 String s = iterator.next();
                 System.out.println(s);
                 String value = data.get(s);
+                if (DataNameUtils.eventName.contains(value)) value = String.valueOf(DataNameUtils.eventName.indexOf(value)+1);
                 if (value != null && !value.equals("")) {
                     if (isFirst) {//第一个不加逗号
                         isFirst = false;
                         columns.append(DataNameUtils.name2name(s));
-                        values.append("'" + data.get(s) + "'");
+                        values.append("'" + value + "'");
                     } else {
                         columns.append("," + DataNameUtils.name2name(s));
-                        values.append(",'" + data.get(s) + "'");
+                        values.append(",'" + value + "'");
                     }
                 }
             }
