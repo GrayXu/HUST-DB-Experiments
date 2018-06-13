@@ -2,10 +2,11 @@ package IO;
 
 import Support.DataNameUtils;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.*;
 
-public class DataBase {
+public class DataBase implements DataBaseIF {
 
     public static final String URL = "jdbc:mysql://localhost:3306/lab3?serverTimezone=UTC&useSSL=false";
     public static final String USER = "root";
@@ -52,6 +53,7 @@ public class DataBase {
      * @throws SQLException
      */
 
+    @Override
     public int checkUser(String name, String psw) throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM users");//全表搜索
@@ -85,7 +87,8 @@ public class DataBase {
                 sql.append("and ");
             }
 
-            if (DataNameUtils.name2name(key).equals("event")) value = String.valueOf(DataNameUtils.eventName.indexOf(value)+1);
+            if (DataNameUtils.name2name(key).equals("event"))
+                value = String.valueOf(DataNameUtils.eventName.indexOf(value) + 1);
             sql.append(DataNameUtils.name2name(key) + " = '" + value + "' ");
         }
         return String.valueOf(sql);
@@ -111,18 +114,20 @@ public class DataBase {
      * @return 获得的数据项
      * @throws SQLException 语句错误或者受到约束
      */
-
+    @Override
     public Vector<Vector<String>> getCarLists() throws SQLException {
         String sql = "SELECT * FROM car ";
         return getCarLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getCarLists(HashMap<String, String> map) throws SQLException {
         String sql = "SELECT * FROM car ";
         sql = sql + getWhereClause(map, false);
         return getCarLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getCarLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         System.out.println(sql);
@@ -132,17 +137,20 @@ public class DataBase {
         return vectors;
     }
 
+    @Override
     public Vector<Vector<String>> getCustomerLists() throws SQLException {
         String sql = "SELECT * FROM customer ";
         return getCustomerLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getCustomerLists(HashMap<String, String> map) throws SQLException {
         String sql = "SELECT * FROM customer ";
         sql = sql + getWhereClause(map, false);
         return getCustomerLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getCustomerLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         System.out.println(sql);
@@ -152,17 +160,20 @@ public class DataBase {
         return vectors;
     }
 
+    @Override
     public Vector<Vector<String>> getStuffLists() throws SQLException {
         String sql = "SELECT * FROM stuff ";
         return getStuffLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getStuffLists(HashMap<String, String> map) throws SQLException {
         String sql = "SELECT * FROM stuff ";
         sql = sql + getWhereClause(map, false);
         return getStuffLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getStuffLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         System.out.println(sql);
@@ -174,6 +185,7 @@ public class DataBase {
 
 
     //权限3用户只能查看自己的用户信息，和修改用户名和密码
+    @Override
     public Vector<Vector<String>> getUserLists(int authority, String userName) throws SQLException {
         String sql = null;
         if (authority == 1) {
@@ -186,6 +198,7 @@ public class DataBase {
         return getUserLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getUserLists(HashMap<String, String> map, int authority, String userName) throws SQLException {
         String sql = null;
         if (authority == 1) {
@@ -201,6 +214,7 @@ public class DataBase {
         return getUserLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getUserLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         System.out.println(sql);
@@ -210,6 +224,7 @@ public class DataBase {
         return vectors;
     }
 
+    @Override
     public Vector<Vector<String>> getInfoLists(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         System.out.println(sql);
@@ -245,6 +260,7 @@ public class DataBase {
         return vectors;
     }
 
+    @Override
     public Vector<Vector<String>> getInfoLists(HashMap<String, String> map, int authority, String userName) throws SQLException {
         String sql = "SELECT info.infoid , info.moychange, car.license, customer.id,customer.name, info.event, info.detailevent, info.time, stuff.id,stuff.name\n" +
                 "FROM info,car,stuff,customer\n" +
@@ -253,6 +269,7 @@ public class DataBase {
         return getInfoLists(sql);
     }
 
+    @Override
     public Vector<Vector<String>> getInfoLists(int authority, String userName) throws SQLException {
         String sql = "SELECT info.infoid , info.moychange, car.license, customer.id,customer.name, info.event, info.detailevent, info.time, stuff.id,stuff.name\n" +
                 "FROM info,car,stuff,customer\n" +
@@ -263,6 +280,7 @@ public class DataBase {
         return getInfoLists(sql);
     }
 
+    @Override
     public String getIDbyUserName(String name) throws SQLException {
         String sql = "SELECT customerid FROM users WHERE NAME = '" + name + "'";
         Statement statement = connection.createStatement();
@@ -283,6 +301,7 @@ public class DataBase {
      * @throws SQLException 语句错误或者受到约束
      */
 
+    @Override
     public void deleteRow(String tableMode, String primaryKey) throws SQLException {
         String tableName = DataNameUtils.tableMode2Name(tableMode);
 
@@ -291,6 +310,7 @@ public class DataBase {
         String sql = "DELETE FROM " + tableName + " WHERE " + primaryKeyName + " = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, primaryKey);
+        System.out.println(preparedStatement.toString());
         preparedStatement.execute();
 
     }
@@ -306,10 +326,11 @@ public class DataBase {
      */
 
 
+    @Override
     public void updateData(String tableMode, String name, String value, String primaryKey) throws SQLException {
         String tableName = DataNameUtils.tableMode2Name(tableMode);
 
-        if (name.equals("事件")) value = DataNameUtils.swtichEventId(value);
+        if (name.equals("事件")) value = String.valueOf(DataNameUtils.eventName.indexOf(value) + 1);
 
         //拿到主键的名字
         String primaryKeyName = DataNameUtils.primaryKeyMap.get(tableName);
@@ -335,6 +356,7 @@ public class DataBase {
      * @throws SQLException 语句错误或者受到约束
      */
 
+    @Override
     public void addRow(String tableMode, HashMap<String, String> data) throws SQLException {
         Statement statement = connection.createStatement();
         String tableName = DataNameUtils.tableMode2Name(tableMode);
@@ -349,7 +371,8 @@ public class DataBase {
                 String s = iterator.next();
                 System.out.println(s);
                 String value = data.get(s);
-                if (DataNameUtils.eventName.contains(value)) value = String.valueOf(DataNameUtils.eventName.indexOf(value)+1);
+                if (DataNameUtils.eventName.contains(value))
+                    value = String.valueOf(DataNameUtils.eventName.indexOf(value) + 1);
                 if (value != null && !value.equals("")) {
                     if (isFirst) {//第一个不加逗号
                         isFirst = false;
@@ -376,6 +399,7 @@ public class DataBase {
      * @return
      * @throws SQLException
      */
+    @Override
     public ArrayList<ArrayList<String>> getAllChartData(String mode, String func) throws SQLException {
 
         String selectItem;
@@ -384,16 +408,16 @@ public class DataBase {
             selectItem = "SUM(moychange)";
         } else {
             selectItem = "COUNT(TIME)";//计算次数
-            int indexid = DataNameUtils.eventName.indexOf(func)+1;
+            int indexid = DataNameUtils.eventName.indexOf(func) + 1;
             whereClause = " WHERE event = " + String.valueOf(indexid);
         }
 
         String sql = null;
-        if (mode.equals("年")){
+        if (mode.equals("年")) {
             sql = "SELECT YEAR(TIME), " + selectItem + " FROM info " + whereClause + " GROUP BY YEAR(TIME)";
-        }else if (mode.equals("月")){
+        } else if (mode.equals("月")) {
             sql = "SELECT YEAR(TIME),MONTH(TIME), " + selectItem + " FROM info " + whereClause + " GROUP BY YEAR(TIME),MONTH(TIME)";
-        }else if (mode.equals("日")){
+        } else if (mode.equals("日")) {
             sql = "SELECT TIME, " + selectItem + " FROM info " + whereClause + " GROUP BY TIME";
         }
 
@@ -411,6 +435,58 @@ public class DataBase {
         }
         statement.close();
         return lists;
+    }
+
+    public HashMap<String, Float> getCredit() throws SQLException {
+        HashMap<String, Float> hashMap = new HashMap<>();
+
+        for (int i = 1; i <= 4; i++) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(getCreditClause(i));
+            while (resultSet.next()) {
+                String key = resultSet.getString(1);
+                int times = resultSet.getInt(2);
+                Float oldValue = hashMap.get(key);
+                if (oldValue == null) oldValue = 0f;
+                switch (i) {
+                    case 1:
+                        hashMap.put(key, oldValue - 3 * times);
+                        break;
+                    case 2:
+                        hashMap.put(key, oldValue - 5 * times);
+                        break;
+                    case 3:
+                        hashMap.put(key, oldValue + 1 * times);
+                        break;
+                    case 4:
+                        hashMap.put(key, (float) (oldValue + 1.5 * times));
+                        break;
+                }
+            }
+            statement.close();
+        }
+
+        return hashMap;
+    }
+
+    private String getCreditClause(int eventid) {
+        return "SELECT customerid,COUNT(customerid) \n" +
+                "FROM info\n" +
+                "WHERE EVENT = " + eventid + "\n" +
+                "GROUP BY customerid";
+    }
+
+    public HashMap<String, String> getMapId2Name() throws SQLException {
+        HashMap<String, String> hashMap = new HashMap<>();
+        Statement statement = connection.createStatement();
+        String sql = "SELECT id, NAME\n" +
+                "FROM customer";
+        ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            hashMap.put(resultSet.getString(1), resultSet.getString(2));
+
+        }
+        return hashMap;
     }
 
 }

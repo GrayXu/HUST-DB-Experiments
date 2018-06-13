@@ -50,7 +50,7 @@ public class MainGui {
     private JScrollPane scrollPane;
 
 
-    //TODO：捆绑更新，导入导出
+    //TODO：捆绑更新
     public static void main(String[] args) {
 
         try {
@@ -258,10 +258,14 @@ public class MainGui {
             i.addActionListener(fileListener);
         }
 
-        JMenu menuReport = new JMenu("报表");
-        JMenuItem itemReport = new JMenuItem("查看报表");
-        menuReport.add(itemReport);
-        itemReport.addActionListener(e -> showChart());
+        JMenu menuReport = new JMenu("统计");
+        JMenuItem itemChart = new JMenuItem("统计报表");
+        JMenuItem itemCredit = new JMenuItem("用户信誉度");
+        menuReport.add(itemChart);
+        menuReport.add(itemCredit);
+        itemChart.addActionListener(e -> showChart());
+        itemCredit.addActionListener(e -> showCredit());
+
 
         JMenu menuManage = new JMenu("管理");
         ArrayList<JMenuItem> itemManage = new ArrayList<>();
@@ -309,40 +313,39 @@ public class MainGui {
             } else {
                 jFileChooser.showSaveDialog(frame);
                 file = jFileChooser.getSelectedFile();
-                path = jFileChooser.getCurrentDirectory() + "\\" + jFileChooser.getName(file);
+                String typeInName = jFileChooser.getName(file);
+                if (typeInName == null || typeInName.equals("")) return;
+                path = jFileChooser.getCurrentDirectory() + "\\" + typeInName;
             }
 
-            try {
-                BufferedWriter bufferedWriter;
-                String bat;
-                if (command.equals("导出")) {
-                    bat = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe lab3 -uroot " + " -pXIANG1569348 -r" + path +" --skip-lock-tables";
-                } else {
-//                    bufferedWriter = new BufferedWriter(new FileWriter("load.bat"));
-//                    bat = "cd \"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\" ; .\\mysql.exe -uroot -pXIANG1569348 lab3 < " + path;
-                    bat = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe lab3 -uroot -pXIANG1569348 -e source " + path;
-                }
-                System.out.println(bat);
-//                bufferedWriter.write(bat);
-//                bufferedWriter.close();
-                Process process = Runtime.getRuntime().exec(bat);//save
-                int com = process.waitFor();
-                if (com == 0){
-//                    System.out.println("成功");
-                    noticeMsg("操作成功");
-                }else{
-                    noticeMsg("操作失败");
-                }
+            if (path != null) {
+                try {
+                    String bat;
+                    if (command.equals("导出")) {
+                        bat = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe lab3 -uroot " + " -pXIANG1569348 -r" + path + " --skip-lock-tables";
+                    } else {
+                        bat = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe lab3 -uroot -pXIANG1569348 -e source " + path;
+                    }
+                    System.out.println(bat);
+                    Process process = Runtime.getRuntime().exec(bat);//save
+                    int com = process.waitFor();
+                    if (com == 0) {
+                        noticeMsg("操作成功");
+                    } else {
+                        noticeMsg("操作失败");
+                    }
 
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
             }
 
 
         }
     };
+
 
     /**
      * 展示图表
@@ -521,7 +524,10 @@ public class MainGui {
         for (int i = 0; i < names.length; i++) {
             JPanelOpen jPanelO = new JPanelOpen();
             JLabelOpen jLO = new JLabelOpen();
-            jLO.setText(names[i]);
+            String key = names[i];
+            if (key.equals("顾客") || key.equals("经手员工")) continue;//dirty code
+
+            jLO.setText(key);
 
             if (comboxSet.contains(names[i])) {
                 JComboBox<String> stringJComboBox = getComboBox(names[i]);
@@ -542,7 +548,7 @@ public class MainGui {
         put("车况", new String[]{"", "1", "2", "3", "4", "5"});
         put("是否会员", new String[]{"", "Y", "N"});
         put("权限等级", new String[]{"", "1", "2", "3"});
-        put("事件", new String[]{"","损坏维修", "罚款", "借车", "还车"});
+        put("事件", new String[]{"", "损坏维修", "罚款", "借车", "还车"});
     }};
 
     private JComboBox<String> getComboBox(String name) {
@@ -552,6 +558,54 @@ public class MainGui {
             jComboBox = new JComboBox<>(contentStrings);
         }
         return jComboBox;
+    }
+
+
+    /**
+     * 展示信誉度统计
+     */
+    private void showCredit(){
+        HashMap<String, Float> dataMap = null;
+        HashMap<String, String> nameMap = null;
+
+        try {
+            dataMap = DataBase.getInstance().getCredit();
+            nameMap = DataBase.getInstance().getMapId2Name();
+        } catch (SQLException e) {
+            noticeMsg("数据库查询信誉度时发生错误");
+            e.printStackTrace();
+        }
+        if (dataMap == null || nameMap == null) return;
+
+        JDialog dialog = new JDialog(frame);
+        dialog.setContentPane(new JPanel());
+        dialog.getContentPane().setLayout(new BorderLayout());
+
+        Set<String> keys = dataMap.keySet();
+        Vector<String> columns = new Vector<String>(Arrays.asList("id","姓名","信誉值"));
+        Vector<Vector<String>> datas = new Vector<>();
+        for (String key: keys) {
+            datas.add(new Vector<>(Arrays.asList(key,String.valueOf(nameMap.get(key)),String.valueOf(dataMap.get(key)))));
+        }
+
+        DefaultTableModel model = new DefaultTableModel(datas,columns);
+        JTable creditTable = new JTable(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        creditTable.getTableHeader().setReorderingAllowed(false);
+        creditTable.setModel(model);
+
+        JScrollPane jScrollPane = new JScrollPane(creditTable);
+        dialog.getContentPane().add(jScrollPane, BorderLayout.CENTER);
+        dialog.pack();
+        setCenter(dialog);
+        dialog.setTitle("信誉度统计");
+        dialog.setVisible(true);
+        dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -627,7 +681,7 @@ public class MainGui {
         });
 
         scrollPane = new JScrollPane(jTable);
-        scrollPane.setPreferredSize(new Dimension(1000, 350));
+        scrollPane.setPreferredSize(new Dimension(1000, 400));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     }
 
@@ -813,9 +867,9 @@ public class MainGui {
                 JPanel jPanel = new JPanel();
                 JLabel jLabel = new JLabel(s);
                 jPanel.add(jLabel, BorderLayout.WEST);
-                if (comboxSet.contains(s)){
+                if (comboxSet.contains(s)) {
                     jPanel.add(getComboBox(s), BorderLayout.EAST);
-                }else{
+                } else {
                     JTextField jTextField = new JTextField(10);
                     jPanel.add(jTextField, BorderLayout.EAST);
                 }
@@ -909,7 +963,7 @@ public class MainGui {
         for (int i = 0; i < components.length - 1; i++) {//不算button
             JPanel jPanelGet = (JPanel) components[i];
             String key = ((JLabel) jPanelGet.getComponents()[0]).getText();
-            if(key.equals("顾客") || key.equals("经手员工")){
+            if (key.equals("顾客") || key.equals("经手员工")) {
                 continue;
             }
 

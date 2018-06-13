@@ -7,8 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.11" level="project" />
-    <orderEntry type="module-library">
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.11" level="project" />
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/redist/annotations-java8.jar!/" />
@@ -17,6 +17,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="db" level="project" />
+    <orderEntry type="library" exported="" name="beautyeye_lnf" level="project" />
+    <orderEntry type="library" exported="" name="JFreeChart" level="project" />
   </component>
 </module>
