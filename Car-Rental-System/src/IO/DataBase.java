@@ -205,7 +205,6 @@ public class DataBase implements DataBaseIF {
             sql = "SELECT * FROM users ";
             sql = sql + getWhereClause(map, false);
         } else if (authority == 2) {
-            sql = sql + getWhereClause(map, true);
             sql = "SELECT * FROM users WHERE author <> 1 ";
         } else if (authority == 3) {
             sql = "SELECT * FROM users WHERE name = '" + userName + "' ";
@@ -282,7 +281,7 @@ public class DataBase implements DataBaseIF {
 
     @Override
     public String getIDbyUserName(String name) throws SQLException {
-        String sql = "SELECT customerid FROM users WHERE NAME = '" + name + "'";
+        String sql = String.format("SELECT customerid FROM users WHERE NAME = '%s'", name);
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         Vector<String> vector = new Vector<>();
@@ -307,7 +306,7 @@ public class DataBase implements DataBaseIF {
 
         String primaryKeyName = DataNameUtils.primaryKeyMap.get(tableName);
         if (primaryKeyName == null) primaryKeyName = "id";
-        String sql = "DELETE FROM " + tableName + " WHERE " + primaryKeyName + " = ?";
+        String sql = String.format("DELETE FROM %s WHERE %s = ?", tableName, primaryKeyName);
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, primaryKey);
         System.out.println(preparedStatement.toString());
@@ -336,7 +335,7 @@ public class DataBase implements DataBaseIF {
         String primaryKeyName = DataNameUtils.primaryKeyMap.get(tableName);
         if (primaryKeyName == null) primaryKeyName = "id";
 
-        String sql = "UPDATE " + tableName + " SET " + DataNameUtils.name2name(name) + " = ? where " + primaryKeyName + " = ?";
+        String sql = String.format("UPDATE %s SET %s = ? where %s = ?", tableName, DataNameUtils.name2name(name), primaryKeyName);
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         if (value.equals("")) {
             preparedStatement.setNull(1, Types.CHAR);//this types.* is useless...
@@ -384,7 +383,7 @@ public class DataBase implements DataBaseIF {
                     }
                 }
             }
-            String sql = "INSERT INTO " + tableName + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
+            String sql = String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, columns.toString(), values.toString());
             System.out.println(sql);
             statement.execute(sql);
             statement.close();
@@ -414,11 +413,11 @@ public class DataBase implements DataBaseIF {
 
         String sql = null;
         if (mode.equals("年")) {
-            sql = "SELECT YEAR(TIME), " + selectItem + " FROM info " + whereClause + " GROUP BY YEAR(TIME)";
+            sql = String.format("SELECT YEAR(TIME), %s FROM info %s GROUP BY YEAR(TIME)", selectItem, whereClause);
         } else if (mode.equals("月")) {
-            sql = "SELECT YEAR(TIME),MONTH(TIME), " + selectItem + " FROM info " + whereClause + " GROUP BY YEAR(TIME),MONTH(TIME)";
+            sql = String.format("SELECT YEAR(TIME),MONTH(TIME), %s FROM info %s GROUP BY YEAR(TIME),MONTH(TIME)", selectItem, whereClause);
         } else if (mode.equals("日")) {
-            sql = "SELECT TIME, " + selectItem + " FROM info " + whereClause + " GROUP BY TIME";
+            sql = String.format("SELECT TIME, %s FROM info %s GROUP BY TIME", selectItem, whereClause);
         }
 
         System.out.println(sql);
@@ -479,8 +478,7 @@ public class DataBase implements DataBaseIF {
     public HashMap<String, String> getMapId2Name() throws SQLException {
         HashMap<String, String> hashMap = new HashMap<>();
         Statement statement = connection.createStatement();
-        String sql = "SELECT id, NAME\n" +
-                "FROM customer";
+        String sql = String.format("SELECT id, NAME\nFROM customer");
         ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()) {
             hashMap.put(resultSet.getString(1), resultSet.getString(2));

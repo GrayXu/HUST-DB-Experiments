@@ -33,25 +33,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainGui.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainGui.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="54" lean-forward="true" selection-start-line="5" selection-start-column="54" selection-end-line="5" selection-end-column="54" />
+            <state relative-caret-position="324">
+              <caret line="215" column="70" lean-forward="true" selection-start-line="215" selection-start-column="70" selection-end-line="215" selection-end-column="70" />
               <folding>
-                <element signature="method#initMainFrame#0;class#MainGui#0" expanded="false" />
+                <element signature="imports" expanded="true" />
                 <element signature="method#showChart#0;class#MainGui#0" expanded="false" />
                 <element signature="method#drawChart#0;class#MainGui#0" expanded="false" />
                 <element signature="method#getChartData#0;class#MainGui#0" expanded="false" />
                 <element signature="method#setCenter#0;class#MainGui#0" expanded="false" />
-                <element signature="method#setSearchPanel#0;class#MainGui#0" expanded="false" />
-                <element signature="method#setBlankInSearchPanel#0;class#MainGui#0" expanded="false" />
-                <element signature="initializer##0;class#18869:19134" expanded="false" />
+                <element signature="initializer##0;class#19094:19359" expanded="false" />
                 <element signature="method#getComboBox#0;class#MainGui#0" expanded="false" />
-                <element signature="e#20141#20149#0" expanded="true" />
-                <element signature="e#20506#20660#0" expanded="true" />
-                <element signature="e#20659#20660#0" expanded="true" />
-                <element signature="method#map2vector#0;class#MainGui#0" expanded="false" />
+                <element signature="e#20727#20881#0" expanded="true" />
+                <element signature="e#20880#20881#0" expanded="true" />
+                <element signature="e#22209#22384#0" expanded="true" />
+                <element signature="e#22383#22384#0" expanded="true" />
+                <element signature="e#22491#22687#0" expanded="true" />
+                <element signature="e#22686#22687#0" expanded="true" />
+                <element signature="e#23097#23278#0" expanded="true" />
+                <element signature="e#23277#23278#0" expanded="true" />
+                <element signature="e#23319#23493#0" expanded="true" />
+                <element signature="e#23492#23493#0" expanded="true" />
+                <element signature="method#checkDataLegal#0;class#MainGui#0" expanded="false" />
+                <element signature="method#mouseRightButtonClick#0;class#MainGui#0" expanded="false" />
+                <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -60,32 +67,37 @@
       <file leaf-file-name="DataBase.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="489" column="5" lean-forward="true" selection-start-line="489" selection-start-column="5" selection-end-line="489" selection-end-column="5" />
+            <state relative-caret-position="9085">
+              <caret line="401" column="44" lean-forward="false" selection-start-line="401" selection-start-column="44" selection-end-line="401" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#addRow#0;class#DataBase#0" expanded="false" />
                 <element signature="method#getCreditClause#0;class#DataBase#0" expanded="false" />
-                <marker date="1528898214842" expanded="true" signature="1485:1504" ph="SELECT * FRO... users" />
-                <marker date="1528898214842" expanded="true" signature="9921:9977" ph="SELECT custo... users" />
-                <marker date="1528898214842" expanded="true" signature="10777:10839" ph="DELETE FROM " />
-                <marker date="1528898214842" expanded="true" signature="11755:11858" ph="UPDATE missi... " />
-                <marker date="1528898214842" expanded="true" signature="13787:13880" ph="INSERT INTO missingValue... " />
-                <marker date="1528898214842" expanded="true" signature="14693:14780" ph="SELECT YEAR(... " />
-                <marker date="1528898214842" expanded="true" signature="14841:14952" ph="SELECT YEAR(... " />
-                <marker date="1528898214842" expanded="true" signature="15013:15088" ph="SELECT TIME,... " />
-                <marker date="1528898214842" expanded="true" signature="17328:17379" ph="SELECT id, N... customer" />
+                <marker date="1529391229452" expanded="true" signature="1485:1504" ph="SELECT * FRO... users" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataBaseIF.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DataBaseIF.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/IO/DataBaseIF.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="345">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BackgrouPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/BackgrouPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="10" column="14" lean-forward="false" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,11 +105,12 @@
       <file leaf-file-name="DataNameUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Support/DataNameUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="71" column="25" lean-forward="false" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+            <state relative-caret-position="46">
+              <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
               <folding>
-                <element signature="e#2442#2443#0" expanded="true" />
-                <element signature="e#2505#2506#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2524#2525#0" expanded="true" />
+                <element signature="e#2589#2590#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,8 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>车况</find>
-      <find>Passwor</find>
       <find>textDialogPsw</find>
       <find>jPanelSearch</find>
       <find>null</find>
@@ -145,6 +156,8 @@
       <find>setVa</find>
       <find>其他</find>
       <find>del</find>
+      <find>setSearchPanel</find>
+      <find>mainBack</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -182,8 +195,8 @@
         <option value="$PROJECT_DIR$/src/GUI/JTextFieldOpen.java" />
         <option value="$PROJECT_DIR$/src/IO/DataBaseIF.java" />
         <option value="$PROJECT_DIR$/src/GUI/JPanelOpen.java" />
-        <option value="$PROJECT_DIR$/src/Support/DataNameUtils.java" />
         <option value="$PROJECT_DIR$/src/IO/DataBase.java" />
+        <option value="$PROJECT_DIR$/src/Support/DataNameUtils.java" />
         <option value="$PROJECT_DIR$/src/GUI/MainGui.java" />
       </list>
     </option>
@@ -214,6 +227,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -260,10 +275,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -475,11 +488,15 @@
       <workItem from="1528790395292" duration="1534000" />
       <workItem from="1528818330596" duration="5214000" />
       <workItem from="1528888358402" duration="10149000" />
+      <workItem from="1529049095709" duration="999000" />
+      <workItem from="1529389026837" duration="2539000" />
+      <workItem from="1530260342536" duration="357000" />
+      <workItem from="1530260964739" duration="791000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="262906000" />
+    <option name="totallyTimeSpent" value="267592000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -581,7 +598,6 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/JComponent.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/sql/PreparedStatement.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/sql/SQLException.java" />
-    <entry file="file://$PROJECT_DIR$/src/GUI/BackgrouPanel.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/JOptionPane.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/javax/swing/JTable.java" />
     <entry file="file://$PROJECT_DIR$/src/GUI/loginPane.form" />
@@ -594,18 +610,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
           <caret line="42" column="17" lean-forward="false" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Support/DataNameUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="71" column="25" lean-forward="false" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
-          <folding>
-            <element signature="e#2442#2443#0" expanded="true" />
-            <element signature="e#2505#2506#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -614,60 +618,82 @@
         <state relative-caret-position="258">
           <caret line="321" column="11" lean-forward="false" selection-start-line="321" selection-start-column="11" selection-end-line="321" selection-end-column="11" />
           <folding>
-            <element signature="e#10946#10947#0" expanded="true" />
-            <element signature="e#11034#11035#0" expanded="true" />
+            <element signature="e#10946#10947#0" expanded="false" />
+            <element signature="e#11034#11035#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IO/DataBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="489" column="5" lean-forward="true" selection-start-line="489" selection-start-column="5" selection-end-line="489" selection-end-column="5" />
+        <state relative-caret-position="9085">
+          <caret line="401" column="44" lean-forward="false" selection-start-line="401" selection-start-column="44" selection-end-line="401" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#addRow#0;class#DataBase#0" expanded="false" />
             <element signature="method#getCreditClause#0;class#DataBase#0" expanded="false" />
-            <marker date="1528898214842" expanded="true" signature="1485:1504" ph="SELECT * FRO... users" />
-            <marker date="1528898214842" expanded="true" signature="9921:9977" ph="SELECT custo... users" />
-            <marker date="1528898214842" expanded="true" signature="10777:10839" ph="DELETE FROM " />
-            <marker date="1528898214842" expanded="true" signature="11755:11858" ph="UPDATE missi... " />
-            <marker date="1528898214842" expanded="true" signature="13787:13880" ph="INSERT INTO missingValue... " />
-            <marker date="1528898214842" expanded="true" signature="14693:14780" ph="SELECT YEAR(... " />
-            <marker date="1528898214842" expanded="true" signature="14841:14952" ph="SELECT YEAR(... " />
-            <marker date="1528898214842" expanded="true" signature="15013:15088" ph="SELECT TIME,... " />
-            <marker date="1528898214842" expanded="true" signature="17328:17379" ph="SELECT id, N... customer" />
+            <marker date="1529391229452" expanded="true" signature="1485:1504" ph="SELECT * FRO... users" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
+    <entry file="file://$PROJECT_DIR$/src/Support/DataNameUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="54" lean-forward="true" selection-start-line="5" selection-start-column="54" selection-end-line="5" selection-end-column="54" />
+        <state relative-caret-position="46">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
-            <element signature="method#initMainFrame#0;class#MainGui#0" expanded="false" />
-            <element signature="method#showChart#0;class#MainGui#0" expanded="false" />
-            <element signature="method#drawChart#0;class#MainGui#0" expanded="false" />
-            <element signature="method#getChartData#0;class#MainGui#0" expanded="false" />
-            <element signature="method#setCenter#0;class#MainGui#0" expanded="false" />
-            <element signature="method#setSearchPanel#0;class#MainGui#0" expanded="false" />
-            <element signature="method#setBlankInSearchPanel#0;class#MainGui#0" expanded="false" />
-            <element signature="initializer##0;class#18869:19134" expanded="false" />
-            <element signature="method#getComboBox#0;class#MainGui#0" expanded="false" />
-            <element signature="e#20141#20149#0" expanded="true" />
-            <element signature="e#20506#20660#0" expanded="true" />
-            <element signature="e#20659#20660#0" expanded="true" />
-            <element signature="method#map2vector#0;class#MainGui#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2524#2525#0" expanded="true" />
+            <element signature="e#2589#2590#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/BackgrouPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="10" column="14" lean-forward="false" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IO/DataBaseIF.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="345">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/MainGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="215" column="70" lean-forward="true" selection-start-line="215" selection-start-column="70" selection-end-line="215" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#showChart#0;class#MainGui#0" expanded="false" />
+            <element signature="method#drawChart#0;class#MainGui#0" expanded="false" />
+            <element signature="method#getChartData#0;class#MainGui#0" expanded="false" />
+            <element signature="method#setCenter#0;class#MainGui#0" expanded="false" />
+            <element signature="initializer##0;class#19094:19359" expanded="false" />
+            <element signature="method#getComboBox#0;class#MainGui#0" expanded="false" />
+            <element signature="e#20727#20881#0" expanded="true" />
+            <element signature="e#20880#20881#0" expanded="true" />
+            <element signature="e#22209#22384#0" expanded="true" />
+            <element signature="e#22383#22384#0" expanded="true" />
+            <element signature="e#22491#22687#0" expanded="true" />
+            <element signature="e#22686#22687#0" expanded="true" />
+            <element signature="e#23097#23278#0" expanded="true" />
+            <element signature="e#23277#23278#0" expanded="true" />
+            <element signature="e#23319#23493#0" expanded="true" />
+            <element signature="e#23492#23493#0" expanded="true" />
+            <element signature="method#checkDataLegal#0;class#MainGui#0" expanded="false" />
+            <element signature="method#mouseRightButtonClick#0;class#MainGui#0" expanded="false" />
+            <element signature="method#setAddRowDialog#0;class#MainGui#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

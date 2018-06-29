@@ -30,9 +30,9 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 public class MainGui {
 
     JPanel jMainPanel;
-    JFrame frame;
+    private JFrame frame;
     private JTable jTable;//当前界面的Table
-    DefaultTableModel tableModel;
+    private DefaultTableModel tableModel;
 
     private String userName;
     private JTextField textDialogName;
@@ -50,7 +50,6 @@ public class MainGui {
     private JScrollPane scrollPane;
 
 
-    //TODO：捆绑更新
     public static void main(String[] args) {
 
         try {
@@ -67,7 +66,7 @@ public class MainGui {
         SCREEN_WIDTH = dim.width;
         SCREEN_HEIGHT = dim.height;
 
-        JFrame getFrame = new MainGui().RunBabyRun();
+        new MainGui().RunBabyRun();
 
     }
 
@@ -110,12 +109,12 @@ public class MainGui {
                 , "ComboBox.font"
         };
 
-        for (int i = 0; i < DEFAULT_FONT.length; i++) {
-            UIManager.put(DEFAULT_FONT[i], new Font("微软雅黑", Font.PLAIN, 12));
+        for (String aDEFAULT_FONT : DEFAULT_FONT) {
+            UIManager.put(aDEFAULT_FONT, new Font("微软雅黑", Font.PLAIN, 12));
         }
     }
 
-    public JFrame RunBabyRun() {
+    private void RunBabyRun() {
         dataBase = DataBase.getInstance();
         frame = new JFrame();//顺便初始化一下父容器
 
@@ -157,11 +156,9 @@ public class MainGui {
             dialogLogin.setSize(new Dimension(270, 200));
             dialogLogin.setResizable(false);
             setCenter(dialogLogin);
-            return frame;
 
         } else {
             JOptionPane.showMessageDialog(frame, "数据库连接失败");
-            return null;
         }
 
     }
@@ -169,42 +166,46 @@ public class MainGui {
     /**
      * 菜单栏中“其他”的监听器
      */
-    ActionListener otherListener = (ActionEvent e) -> {
+    private ActionListener otherListener = (ActionEvent e) -> {
         String strClick = e.getActionCommand();
         System.out.println(strClick);
-        if (strClick.equals("登录")) {
-            //check and set authority
-            String nameInput = textDialogName.getText();
-            String pswInput = textDialogPsw.getText();
-            System.out.println("name:" + nameInput + "\npsw:" + pswInput);
-            userName = nameInput;
-            try {
-                authority = dataBase.checkUser(nameInput, pswInput);
-                if (authority != -1) {
-                    dialogLogin.setVisible(false);
-                    initMainFrame();
+        switch (strClick) {
+            case "登录":
+                //check and set authority
+                String nameInput = textDialogName.getText();
+                String pswInput = textDialogPsw.getText();
+                System.out.println("name:" + nameInput + "\npsw:" + pswInput);
+                userName = nameInput;
+                try {
+                    authority = dataBase.checkUser(nameInput, pswInput);
+                    if (authority != -1) {
+                        dialogLogin.setVisible(false);
+                        initMainFrame();
 
-                } else {
-                    noticeMsg("用户名或密码错误");
+                    } else {
+                        noticeMsg("用户名或密码错误");
+                    }
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                    noticeMsg("数据库连接失败");
                 }
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                noticeMsg("数据库连接失败");
-            }
-        } else if (strClick.equals("切换账户")) {
-            frame.getContentPane().removeAll();
-            frame.setVisible(false);
-            dialogLogin.setVisible(true);
-            PANEL_MODE = "";
-        } else if (strClick.equals("说明")) {
-            noticeMsg("本信息管理系统基于Java Swing进行界面开发，MySQL后台支持\n\t——Power by Gray");
+                break;
+            case "切换账户":
+                frame.getContentPane().removeAll();
+                frame.setVisible(false);
+                dialogLogin.setVisible(true);
+                PANEL_MODE = "";
+                break;
+            case "说明":
+                noticeMsg("本信息管理系统基于Java Swing进行界面开发，MySQL后台支持\n\t——Power by Gray");
+                break;
         }
     };
 
     /**
      * 初始化主框架
      */
-    public void initMainFrame() {
+    private void initMainFrame() {
         try {
             jMainPanel = new BackgrouPanel("res/mainBack2.jpg");
         } catch (IOException e) {
@@ -212,7 +213,7 @@ public class MainGui {
         }
         frame.setContentPane(jMainPanel);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("汽车租借信息管理系统——欢迎" + userName);
         initMenu();
         createPopupMenu();
@@ -296,7 +297,7 @@ public class MainGui {
     /**
      * 文件选择框
      */
-    ActionListener fileListener = new ActionListener() {
+    private ActionListener fileListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
@@ -335,9 +336,7 @@ public class MainGui {
                         noticeMsg("操作失败");
                     }
 
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (InterruptedException e1) {
+                } catch (IOException | InterruptedException e1) {
                     e1.printStackTrace();
                 }
             }
@@ -454,9 +453,9 @@ public class MainGui {
     /**
      * 窗口放置桌面中央
      *
-     * @param c
+     * @param c component waited to be reset
      */
-    public void setCenter(Component c) {
+    private void setCenter(Component c) {
 //        ((Window) c).pack();
         c.setLocation((SCREEN_WIDTH - c.getWidth()) / 2, (SCREEN_HEIGHT - c.getHeight()) / 2);
         c.setVisible(true);
@@ -466,8 +465,10 @@ public class MainGui {
         JOptionPane.showMessageDialog(frame, in);
     }
 
+
     /**
-     * initialize search panel
+     * 根据不同的表，绘制不同的成对Label与TextField或Combobox，内部通过获取搜索栏的新约束条件获得新的结果并重绘表格Panel
+     * @param jPanelSearch Search components' parent components
      */
     private void setSearchPanel(JPanelOpen jPanelSearch) {
         jPanelSearch.setLayout(new FlowLayout());
@@ -492,16 +493,22 @@ public class MainGui {
                 try {
                     //在这里利用搜索栏中新的约束条件获得新的获取结果
                     Vector<Vector<String>> vectors = null;
-                    if (PANEL_MODE.equals("车辆")) {
-                        vectors = DataBase.getInstance().getCarLists(dataMap);
-                    } else if (PANEL_MODE.equals("顾客")) {
-                        vectors = DataBase.getInstance().getCustomerLists(dataMap);
-                    } else if (PANEL_MODE.equals("用户")) {
-                        vectors = DataBase.getInstance().getUserLists(dataMap, authority, userName);
-                    } else if (PANEL_MODE.equals("员工")) {
-                        vectors = DataBase.getInstance().getStuffLists(dataMap);
-                    } else if (PANEL_MODE.equals("事件")) {
-                        vectors = DataBase.getInstance().getInfoLists(dataMap, authority, userName);
+                    switch (PANEL_MODE) {
+                        case "车辆":
+                            vectors = DataBase.getInstance().getCarLists(dataMap);
+                            break;
+                        case "顾客":
+                            vectors = DataBase.getInstance().getCustomerLists(dataMap);
+                            break;
+                        case "用户":
+                            vectors = DataBase.getInstance().getUserLists(dataMap, authority, userName);
+                            break;
+                        case "员工":
+                            vectors = DataBase.getInstance().getStuffLists(dataMap);
+                            break;
+                        case "事件":
+                            vectors = DataBase.getInstance().getInfoLists(dataMap, authority, userName);
+                            break;
                     }
 
                     setTablePanel(vectors, columns);
@@ -517,20 +524,18 @@ public class MainGui {
         jPanelSearch.add(jButton);
     }
 
-
     private void setBlankInSearchPanel(JPanelOpen jPanelSearch, String names[]) {
         Set<String> comboxSet = comboxMap.keySet();
 
-        for (int i = 0; i < names.length; i++) {
+        for (String name : names) {
             JPanelOpen jPanelO = new JPanelOpen();
             JLabelOpen jLO = new JLabelOpen();
-            String key = names[i];
-            if (key.equals("顾客") || key.equals("经手员工")) continue;//dirty code
+            if (name.equals("顾客") || name.equals("经手员工")) continue;//dirty code
 
-            jLO.setText(key);
+            jLO.setText(name);
 
-            if (comboxSet.contains(names[i])) {
-                JComboBox<String> stringJComboBox = getComboBox(names[i]);
+            if (comboxSet.contains(name)) {
+                JComboBox<String> stringJComboBox = getComboBox(name);
                 jPanelO.add(jLO);
                 jPanelO.add(stringJComboBox);
             } else {
@@ -582,7 +587,7 @@ public class MainGui {
         dialog.getContentPane().setLayout(new BorderLayout());
 
         Set<String> keys = dataMap.keySet();
-        Vector<String> columns = new Vector<String>(Arrays.asList("id","姓名","信誉值"));
+        Vector<String> columns = new Vector<>(Arrays.asList("id", "姓名", "信誉值"));
         Vector<Vector<String>> datas = new Vector<>();
         for (String key: keys) {
             datas.add(new Vector<>(Arrays.asList(key,String.valueOf(nameMap.get(key)),String.valueOf(dataMap.get(key)))));
@@ -612,8 +617,8 @@ public class MainGui {
      * 加载全新的表格
      * after called, scroll panel would be reset, you should add scroll panel to content panel again.
      *
-     * @param vectors
-     * @param columns
+     * @param vectors data
+     * @param columns columns' names
      */
     private void setTablePanel(Vector<Vector<String>> vectors, Vector<String> columns) {
         if (scrollPane != null) {
@@ -630,9 +635,9 @@ public class MainGui {
             }
         };
 
-        /**
-         * 修改权限的体现
-         * */
+        /*
+          修改权限的体现
+          */
         if ((PANEL_MODE.equals("车辆") || PANEL_MODE.equals("事件")) & authority == 3) {//顾客不能修改车辆表和事件表
             jTable = new JTable() {
                 @Override
@@ -688,11 +693,11 @@ public class MainGui {
     /**
      * 检查单项数据是否格式合法
      *
-     * @param name
-     * @param value
-     * @return
+     * @param name attribute's name
+     * @param value just value
+     * @return yes or no
      */
-    public boolean checkDataLegal(String name, String value) {
+    private boolean checkDataLegal(String name, String value) {
         //check is legal or not
         if (value.contains("'") || value.contains(" ") || value.contains("=")) {
             noticeMsg("新数据中含有非法字段(\"'\", \" \"), \"=\"");
@@ -774,7 +779,7 @@ public class MainGui {
     /**
      * 修改表格界面的监听器
      */
-    ActionListener changeTableListener = e -> {
+    private ActionListener changeTableListener = e -> {
         String strClick = e.getActionCommand();
         System.out.println(strClick);
         if (!PANEL_MODE.equals(strClick)) {//界面如已加载过则不继续加载
@@ -784,21 +789,27 @@ public class MainGui {
             Vector<Vector<String>> vectors = null;//数据vertor
 
             try {
-                if (strClick.equals("顾客")) {
-                    columns = new Vector<>(Arrays.asList(DataNameUtils.customerColumns));
-                    vectors = DataBase.getInstance().getCustomerLists();
-                } else if (strClick.equals("车辆")) {
-                    columns = new Vector<>(Arrays.asList(DataNameUtils.carColumns));
-                    vectors = DataBase.getInstance().getCarLists();
-                } else if (strClick.equals("员工")) {
-                    columns = new Vector<>(Arrays.asList(DataNameUtils.stuffColumns));
-                    vectors = DataBase.getInstance().getStuffLists();
-                } else if (strClick.equals("用户")) {
-                    columns = new Vector<>(Arrays.asList(DataNameUtils.usersColumns));
-                    vectors = DataBase.getInstance().getUserLists(authority, userName);
-                } else if (strClick.equals("事件")) {
-                    columns = new Vector<>(Arrays.asList(DataNameUtils.infoColumns));
-                    vectors = DataBase.getInstance().getInfoLists(authority, userName);
+                switch (strClick) {
+                    case "顾客":
+                        columns = new Vector<>(Arrays.asList(DataNameUtils.customerColumns));
+                        vectors = DataBase.getInstance().getCustomerLists();
+                        break;
+                    case "车辆":
+                        columns = new Vector<>(Arrays.asList(DataNameUtils.carColumns));
+                        vectors = DataBase.getInstance().getCarLists();
+                        break;
+                    case "员工":
+                        columns = new Vector<>(Arrays.asList(DataNameUtils.stuffColumns));
+                        vectors = DataBase.getInstance().getStuffLists();
+                        break;
+                    case "用户":
+                        columns = new Vector<>(Arrays.asList(DataNameUtils.usersColumns));
+                        vectors = DataBase.getInstance().getUserLists(authority, userName);
+                        break;
+                    case "事件":
+                        columns = new Vector<>(Arrays.asList(DataNameUtils.infoColumns));
+                        vectors = DataBase.getInstance().getInfoLists(authority, userName);
+                        break;
                 }
             } catch (SQLException e1) {
                 e1.printStackTrace();
@@ -840,15 +851,13 @@ public class MainGui {
 
         JMenuItem addMenuItem = new JMenuItem();
         addMenuItem.setText("添加新行");
-        addMenuItem.addActionListener(evt -> {
-            setAddRowDialog();
-        });
+        addMenuItem.addActionListener(evt -> setAddRowDialog());
 
         jPopupMenu.add(delMenuItem);
         jPopupMenu.add(addMenuItem);
     }
 
-    JDialog dialogAddRow;
+    private JDialog dialogAddRow;
 
     private void setAddRowDialog() {
         //create a dialog
@@ -858,7 +867,7 @@ public class MainGui {
         JPanel contentPanel = new JPanel();
         dialogAddRow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        String[] columnNames = DataNameUtils.getColumnNamesByMode(PANEL_MODE);
+        String[] columnNames = DataNameUtils.getColumnNamesByMode(PANEL_MODE);//从对应的静态工具类中读取列表行名
 
         Set<String> comboxSet = comboxMap.keySet();
 
@@ -884,7 +893,7 @@ public class MainGui {
             HashMap<String, String> map = getDataMap((JPanel) dialogAddRow.getContentPane());
             if (checkNewData(map)) {
                 try {
-                    DataBase.getInstance().addRow(PANEL_MODE, map);
+                    DataBase.getInstance().addRow(PANEL_MODE, map);//单例模式获取数据库管理对象，调用对应的添加行函数
                     tableModel.addRow(map2vector(map));
                     dialogAddRow.dispose();
                 } catch (SQLException e1) {
@@ -902,9 +911,7 @@ public class MainGui {
 
     private boolean checkNewData(HashMap<String, String> map) {
         Set<String> set = map.keySet();
-        Iterator<String> i = set.iterator();
-        while (i.hasNext()) {
-            String key = i.next();
+        for (String key : set) {
             String value = map.get(key);
             if (!checkDataLegal(key, value)) {//一个个检查
                 return false;
@@ -915,9 +922,7 @@ public class MainGui {
 
     private boolean checkSearchData(HashMap<String, String> map) {
         Set<String> set = map.keySet();
-        Iterator<String> i = set.iterator();
-        while (i.hasNext()) {
-            String key = i.next();
+        for (String key : set) {
             String value = map.get(key);
             if (value.equals("")) continue;
             if (!checkDataLegal(key, value)) {//一个个检查
@@ -955,7 +960,7 @@ public class MainGui {
      * 传入一个JPanel父容器
      * 传出的字符串可能有带空
      *
-     * @return
+     * @return map filled with data
      */
     private HashMap<String, String> getDataMap(JPanel jPanelIn) {
         HashMap<String, String> map = new HashMap<>();
@@ -967,7 +972,7 @@ public class MainGui {
                 continue;
             }
 
-            String value = null;
+            String value;
             try {
                 value = ((JTextField) jPanelGet.getComponents()[1]).getText();
             } catch (Exception e) {
@@ -982,8 +987,8 @@ public class MainGui {
     /**
      * hashmap转vector，方便addRow
      *
-     * @param map
-     * @return
+     * @param map old hashmap
+     * @return new vector
      */
     private Vector<String> map2vector(HashMap<String, String> map) {
         Vector<String> vector = new Vector<>();

@@ -27,16 +27,23 @@ public class DataNameUtils {
 
     public static String[] getColumnNamesByMode(String mode) {
         String[] columnNames = new String[0];
-        if (mode.equals("用户")) {
-            columnNames = DataNameUtils.usersColumns;
-        } else if (mode.equals("顾客")) {
-            columnNames = DataNameUtils.customerColumns;
-        } else if (mode.equals("员工")) {
-            columnNames = DataNameUtils.stuffColumns;
-        } else if (mode.equals("车辆")) {
-            columnNames = DataNameUtils.carColumns;
-        } else if (mode.equals("事件")) {
-            columnNames = DataNameUtils.infoColumns;//这里应该用更好的办法
+        switch (mode) {
+            case "用户":
+                columnNames = DataNameUtils.usersColumns;
+                break;
+            case "顾客":
+                columnNames = DataNameUtils.customerColumns;
+                break;
+            case "员工":
+                columnNames = DataNameUtils.stuffColumns;
+                break;
+            case "车辆":
+                columnNames = DataNameUtils.carColumns;
+                break;
+            case "事件":
+                columnNames = DataNameUtils.infoColumns;//这里应该用更好的办法
+
+                break;
         }
         return columnNames;
     }
@@ -70,7 +77,7 @@ public class DataNameUtils {
     public static ArrayList<String> eventName = new ArrayList<>(Arrays.asList("损坏维修", "罚款", "借车", "还车"));
 
     public static String swtichEventId(String strIn) {
-        return String.valueOf(eventName.indexOf(strIn));
+        return String.valueOf(eventName.indexOf(strIn)+1);
     }
 
     private static HashMap<String, String> tableMode2NameMap = new HashMap<String, String>() {{

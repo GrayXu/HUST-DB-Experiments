@@ -1,1 +1,0 @@
-cd "C:\Program Files\MySQL\MySQL Server 8.0\bin" ; .\mysql.exe -uroot -pXIANG1569348 lab3 < C:\Users\Dell\Documents\1.sql
